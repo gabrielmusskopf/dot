@@ -31,12 +31,6 @@ plugins=(
 	history 
 )
 
-source $ZSH/oh-my-zsh.sh
-
-if [ -f ~/.asdf/asdf.sh ]; then
-    . $HOME/.asdf/asdf.sh
-fi
-
 # aliases                                                               # For a complete list, run `alias`
 alias notes="nvim $NOTES"
 alias g="git"                                                           # git aliases
@@ -74,6 +68,12 @@ export BG_COLOR="#181818"
 
 # colorscript random
 # neofetch
+
+source $ZSH/oh-my-zsh.sh
+
+if [ -f ~/.asdf/asdf.sh ]; then
+    . $HOME/.asdf/asdf.sh
+fi
 
 if [[ -z $DISPLAY && $(tty) == /dev/tty2 ]]; then
   XDG_SESSION_TYPE=x11 GDK_BACKEND=x11 exec startx
