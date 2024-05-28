@@ -1,0 +1,9 @@
+---
+- name: Install k9s
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Install k9s deb
+      apt:
+        deb: "https://github.com/derailed/k9s/releases/download/v0.32.4/k9s_linux_amd64.deb"

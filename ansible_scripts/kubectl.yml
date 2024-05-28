@@ -1,0 +1,51 @@
+---
+- name: Install Kubectl
+  hosts: localhost
+  become: true
+  vars:
+    tmp_dir: /tmp/kubectl
+
+  tasks:
+    - name: Create tmp dir
+      file:
+        path: "{{ tmp_dir }}"
+        state: directory
+
+    - name: Update and upgrade all packages to the latest version
+      apt:
+        update_cache: true
+        upgrade: dist
+        cache_valid_time: 3600
+
+    - name: Install required packages
+      apt:
+        pkg:
+          - curl
+
+    - name: Install binary
+      shell: 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"'
+      args:
+        chdir: "{{ tmp_dir }}"
+
+    - name: Download check binary
+      shell: 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"'
+      args:
+        chdir: "{{ tmp_dir }}"
+
+    - name: Check binary
+      register: check_bin
+      shell: 'echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check'
+      args:
+        chdir: "{{ tmp_dir }}"
+
+    - debug: msg="{{ check_bin.stdout }}"
+
+    - name: Install kubectl
+      shell: "sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl"
+      args:
+        chdir: "{{ tmp_dir }}"
+
+    - name: Clean up
+      file:
+        path: "{{ tmp_dir }}"
+        state: absent

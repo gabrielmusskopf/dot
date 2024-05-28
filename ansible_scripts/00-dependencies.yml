@@ -1,0 +1,40 @@
+---
+- name: Install dependencies
+  hosts: localhost
+
+  tasks:
+    - name: Ensure dependencies are installed
+      become: yes
+      apt:
+        name:
+          - git
+          - gcc
+          - curl
+          - cmake 
+          - fd-find
+          - autoconf
+          - bison
+          - build-essential
+          - libssl-dev
+          - libyaml-dev
+          - libreadline6-dev
+          - zlib1g-dev
+          - libncurses5-dev
+          - libffi-dev
+          - libgdbm6
+          - libgdbm-dev
+          - libdb-dev
+          - liblzma-dev
+        state: present
+
+    - name: Find the path of fdfind
+      command: which fdfind
+      register: fdfind_path
+      changed_when: false
+
+    - name: Create symlink ~/.local/bin/fd -> fdfind
+      file:
+        src: "{{ fdfind_path.stdout }}"
+        dest: "{{ ansible_env.HOME }}/.local/bin/fd"
+        state: link
+      when: fdfind_path.stdout != ""

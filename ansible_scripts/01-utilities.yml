@@ -1,0 +1,26 @@
+---
+- name: Utilities
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Update apt cache
+      when: ansible_os_family == 'Debian'
+      apt:
+        update_cache: yes
+
+    - name: Install utilities
+      apt:
+        state: present
+        name:
+          - vim
+          - fzf
+          - tmux
+          - ripgrep
+
+    - name: Download my .tmux.conf
+      get_url:
+        url: https://raw.githubusercontent.com/gabrielmusskopf/dotfiles/main/.tmux.conf
+        dest: "/home/{{ ansible_user }}/.tmux.conf"
+        force: true
+        mode: "0644"

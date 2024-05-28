@@ -1,0 +1,20 @@
+---
+- name: Install Brave
+  hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Dependencies
+      apt: 
+        pkg: curl
+
+    - name: Download keys
+      shell: 'curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg'
+
+    - name: Add repository
+      shell: 'echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list'
+
+    - name: Install
+      apt:
+        update_cache: true
+        pkg: brave-browser

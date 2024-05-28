@@ -1,0 +1,46 @@
+
+---
+- name: asdf
+  hosts: localhost
+  vars:
+    asdf_home: '{{ ansible_env.HOME }}/.asdf'
+
+  tasks:
+    - name: Install asdf
+      git:
+        depth: 1
+        repo: "https://github.com/asdf-vm/asdf.git"
+        dest: "/home/{{ ansible_user }}/.asdf"
+        version: "v0.14.0"
+
+    - debug: msg="{{ asdf_home }}"
+
+    - name: asdf java plugin
+      shell: . {{ asdf_home }}/asdf.sh && asdf plugin-add java https://github.com/halcyon/asdf-java.git
+      args:
+        executable: /bin/sh
+
+    - name: asdf python plugin
+      shell: . {{ asdf_home }}/asdf.sh && asdf plugin-add python https://github.com/asdf-community/asdf-python.git
+      args:
+        executable: /bin/sh
+
+    - name: asdf nodejs plugin
+      shell: . {{ asdf_home }}/asdf.sh && asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+      args:
+        executable: /bin/sh
+
+    - name: asdf golang plugin
+      shell: . {{ asdf_home }}/asdf.sh && asdf plugin add golang https://github.com/asdf-community/asdf-golang.git
+      args:
+        executable: /bin/sh
+
+    - name: asdf maven plugin
+      shell: . {{ asdf_home }}/asdf.sh && asdf plugin-add maven https://github.com/halcyon/asdf-maven.git
+      args:
+        executable: /bin/sh
+
+    - name: asdf rust plugin
+      shell: . {{ asdf_home }}/asdf.sh && asdf plugin-add rust https://github.com/asdf-community/asdf-rust.git
+      args:
+        executable: /bin/sh

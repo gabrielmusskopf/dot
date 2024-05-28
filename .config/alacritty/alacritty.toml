@@ -1,0 +1,20 @@
+import = ["/home/gabrielgmusskopf/.config/alacritty/gruvbox-hard.toml"]
+
+live_config_reload = true
+
+[font]
+size = 10.8
+
+[font.normal]
+family = "JetBrainsMonoNL Nerd Font"
+style = "Regular"
+
+[window]
+decorations = "none"
+opacity = 1
+# startup_mode = "Windowed" | "Maximized" | "Fullscreen" | "SimpleFullscreen"
+startup_mode = "Maximized"
+
+[window.padding]
+x = 20
+y = 15

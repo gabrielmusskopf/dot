@@ -1,0 +1,95 @@
+""" Map leader to space ---------------------
+let mapleader=" "
+
+""" Plugins  --------------------------------
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+
+""" Plugin settings -------------------------
+let g:argtextobj_pairs="[:],(:),<:>"
+
+""" Common settings -------------------------
+
+let mapleader=" "
+
+set showmode
+set so=5
+set incsearch
+set nu
+set visualbell
+set noerrorbells
+set relativenumber
+#set clipboard+=unnamed
+#set clipboard+=ideaputn
+
+noremap \e :e ~/.ideavimrc<CR>
+nnoremap \r :action IdeaVim.ReloadVimRc.reload<CR>
+nnoremap <S-U> :undo<CR>
+
+map <C-c> <Esc>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+nnoremap <C-e> <C-Down>
+nnoremap <C-y> <C-Up>
+
+nmap oo o<Esc>
+nmap OO O<Esc>
+
+nnoremap <leader>f :action ToggleDistractionFreeMode<CR>
+
+nnoremap <TAB> :action NextTab<CR>
+nnoremap <s-TAB> :action PreviousTab<CR>
+
+nnoremap zc :action CollapseRegion<CR>
+nnoremap zo :action ExpandRegion<CR>
+nnoremap <leader>zc :action CollapseAllRegions<CR>
+nnoremap <leader>zo :action ExpandAllRegions<CR>
+
+""" Split and close prev
+nnoremap <c-\> :action MoveTabRight<CR>
+
+nnoremap <leader>s :action GotoRelated<CR>
+nnoremap <leader>h :action CallHierarchy<CR>
+nnoremap <leader>b :action ShowNavBar<CR>
+nnoremap <c-s> :action FileStructurePopup<CR>
+nnoremap <c-o> :action GotoSymbol<CR>
+nnoremap <c-b> :action HideSideWindows<CR>
+nnoremap gc :action GotoClass<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gp :action GotToSuperMethod<CR>
+nnoremap gt :action GotoTest<CR>
+nnoremap gb :action Back<CR>
+nnoremap gf :action Forward<CR>
+nnoremap gu :action ShowUsages<CR>
+nnoremap ]d :action GotoNextError<CR>
+nnoremap [d :action GotoPreviousError<CR>
+
+nnoremap <c-p> :action JumpToLastWindow<CR>
+nnoremap <c-x> :action HideAllWindows<CR>
+
+nnoremap ,c :action RunClass<CR>
+nnoremap ,p :action ChooseRunConfiguration<CR>
+nnoremap ,t :action ActivateRunToolWindow<CR>
+nnoremap ,r :action Rerun<CR>
+nnoremap ,s :action Stop<CR>
+nnoremap <leader>bl :action ShowBookmarks<CR>
+nnoremap <leader>bn :action GotoNextBookmark<CR>
+nnoremap <leader>bb :action GotoPreviousBookmark<CR>
+nnoremap <leader>b+ :action ToggleBookmark<CR>
+
+
+""" Debug
+nnoremap <leader>db :action ToggleLineBreakpoint<CR>
+nnoremap <leader>dn :action Resume<CR>
+nnoremap <leader>dd :action Debug<CR> 
+
+nnoremap <leader>s [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]]

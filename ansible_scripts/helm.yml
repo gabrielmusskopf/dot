@@ -1,0 +1,35 @@
+---
+- name: Install Helm
+  hosts: localhost
+  become: true
+  vars:
+    helm_plataform: linux-amd64
+    helm_artifact: helm-v3.15.0-{{ helm_plataform }}.tar.gz
+
+  tasks:
+    - name: Download Helm tar
+      get_url:
+        url: "https://get.helm.sh/{{ helm_artifact }}"
+        dest: "./"
+
+    - name: Unarchive Helm
+      unarchive:
+        src: "{{ helm_artifact}}"
+        dest: "./"
+
+    - name: Add Helm to path
+      copy:
+        src: "./{{ helm_plataform }}/helm"
+        dest: "/usr/local/bin/"
+        mode: 0755
+        force: true
+
+    - name: Cleanup tar
+      file:
+        path: "./{{ helm_artifact }}"
+        state: absent
+
+    - name: Cleanup untared
+      file:
+        path: "./{{ helm_plataform }}"
+        state: absent

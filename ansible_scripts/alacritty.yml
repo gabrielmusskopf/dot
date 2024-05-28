@@ -1,0 +1,99 @@
+
+---
+- name: Alacritty
+  hosts: localhost
+  vars:
+   software_home: '{{ ansible_env.HOME }}/software'
+   alacritty_home: '{{ software_home }}/alacritty'
+   tmp_dir: '/tmp/alacritty-install'
+
+  tasks:
+    - name: Dependencies
+      become: true
+      apt:
+        pkg:
+          - cmake 
+          - pkg-config 
+          - libfreetype6-dev 
+          - libfontconfig1-dev 
+          - libxcb-xfixes0-dev 
+          - libxkbcommon-dev
+        state: present
+
+    - name: Mkdir software
+      shell: "mkdir -p {{ software_home }}"
+
+    - name: Clone repo
+      git:
+        depth: 1
+        repo: "https://github.com/alacritty/alacritty.git"
+        dest: "{{ software_home }}/alacritty"
+
+    - name: Build
+      shell: "cargo build --release"
+      args:
+        chdir: "{{ alacritty_home }}"
+
+    - name: Post install
+      block:
+        - name: Terminfo
+          shell: "infocmp alacritty"
+          args:
+            chdir: "{{ alacritty_home }}"
+      rescue:
+        - name: Install terminfo globally
+          become: true
+          shell: "tic -xe alacritty,alacritty-direct extra/alacritty.info"
+          args:
+            chdir: "{{ alacritty_home }}"
+
+    - name: Desktop info
+      become: true
+      shell: "cp -f target/release/alacritty /usr/local/bin"
+      args:
+        chdir: "{{ alacritty_home }}"
+
+    - name: Desktop info logo
+      become: true
+      shell: "cp -f extra/logo/alacritty-term.svg /usr/share/pixmaps/Alacritty.svg"
+      args:
+        chdir: "{{ alacritty_home }}"
+
+    - name: Desktop info intall
+      become: true
+      shell: "desktop-file-install extra/linux/Alacritty.desktop"
+      args:
+        chdir: "{{ alacritty_home }}"
+
+    - name: Desktop info update
+      become: true
+      shell: "update-desktop-database"
+      args:
+        chdir: "{{ alacritty_home }}"
+
+    - name: Temp dir
+      become: true
+      file:
+        path: "{{ tmp_dir }}"
+        state: directory
+
+    - name: Download my config
+      become: true
+      git:
+        depth: 1
+        repo: "https://github.com/gabrielmusskopf/dotfiles.git"
+        dest: "{{ tmp_dir }}/dotfiles"
+
+    - name: Copy alacritty config
+      become: true
+      copy:
+        src: "{{ tmp_dir }}/dotfiles/.config/alacritty"
+        dest: "{{ ansible_env.HOME }}/.config"
+        mode: 0755
+        force: true
+
+    - name: Clean up
+      become: true
+      file:
+        path: "{{ tmp_dir }}"
+        state: absent

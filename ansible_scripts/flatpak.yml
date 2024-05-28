@@ -1,0 +1,17 @@
+---
+- name: Flatpak
+  hosts: localhost
+
+  tasks:
+    - name: Ensure dependencies are installed
+      become: yes
+      apt:
+        name: 
+          - flatpak
+          - gnome-software-plugin-flatpak
+        state: present
+
+    - name: Add remote repo
+      shell: flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+      # Restart host

@@ -1,0 +1,34 @@
+---
+- name: Install Neovim
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Unarchive Neovim
+      unarchive:
+        src: "https://github.com/neovim/neovim/releases/download/v0.10.0/nvim-linux64.tar.gz"
+        dest: "."
+        remote_src: yes
+
+    - name: Add Neovim to path
+      shell: 'cp -r nvim-linux64/* /usr/local/'
+
+    - name: Download my Neovim config
+      git:
+        depth: 1
+        repo: "https://github.com/gabrielmusskopf/dotfiles.git"
+        dest: './mydotfiles'
+
+    - name: Copy Neovim config
+      shell: 'cp -r mydotfiles/.config/nvim /home/{{ ansible_user }}/.config'
+
+    - name: Cleanup Neovim artifact
+      file: 
+        path: 'nvim-linux64/'
+        state: 'absent'
+
+    - name: Cleanup configs
+      file: 
+        path: 'mydotfiles'
+        state: 'absent'
+
