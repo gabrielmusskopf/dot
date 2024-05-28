@@ -51,7 +51,7 @@ alias add="git add"
 alias restore="git restore"
 alias cherry-pick="git cherry-pick"
 alias vdir="nvim ~/.config/nvim/"                                       # neovim config dir
-alias config="/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME" # dotfiles bare repo
+alias config="/usr/bin/git -C $HOME/dot/"                               # dotfiles managed with stow
 alias sudoenv="sudo -E env 'PATH=$PATH'"                                # user envs as root
 alias rip="rip --graveyard ~/.local/share/graveyard"                    # move to graveyard instead of just remove
 alias fd="fdfind"
