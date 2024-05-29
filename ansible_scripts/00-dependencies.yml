@@ -11,6 +11,7 @@
           - gcc
           - curl
           - cmake 
+          - stow
           - fd-find
           - autoconf
           - bison
@@ -38,3 +39,13 @@
         dest: "{{ ansible_env.HOME }}/.local/bin/fd"
         state: link
       when: fdfind_path.stdout != ""
+
+    - name: Download dotfiles
+      git:
+        repo: "https://github.com/gabrielmusskopf/dot"
+        dest: "~/"
+
+    - name: Apply dotfiles stow
+      shell: "stow ."
+      args:
+        chdir: "~/dot"

@@ -31,6 +31,30 @@ plugins=(
 	history 
 )
 
+# colorscript random
+# neofetch
+
+source $ZSH/oh-my-zsh.sh
+
+if [ -f ~/.asdf/asdf.sh ]; then
+    . $HOME/.asdf/asdf.sh
+fi
+
+if [[ -z $DISPLAY && $(tty) == /dev/tty2 ]]; then
+  XDG_SESSION_TYPE=x11 GDK_BACKEND=x11 exec startx
+fi
+
+if [ -d ~/.kube ]; then
+  for file in $(find ~/.kube -type f -name "*.yaml" -o -name "*.yml"); do
+      export KUBECONFIG=$KUBECONFIG:$file
+  done
+fi
+
+if [ -f ~/.config/vpn/env.sh ]; then
+    source ~/.config/vpn/env.sh
+fi
+
+
 # aliases                                                               # For a complete list, run `alias`
 alias notes="nvim $NOTES"
 alias g="git"                                                           # git aliases
@@ -63,30 +87,5 @@ export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.local/bin/scripts:$PATH
 export JAVA_HOME=$(asdf where java)
 export BG_COLOR="#181818"
-
-# scripts to run every new terminal
-
-# colorscript random
-# neofetch
-
-source $ZSH/oh-my-zsh.sh
-
-if [ -f ~/.asdf/asdf.sh ]; then
-    . $HOME/.asdf/asdf.sh
-fi
-
-if [[ -z $DISPLAY && $(tty) == /dev/tty2 ]]; then
-  XDG_SESSION_TYPE=x11 GDK_BACKEND=x11 exec startx
-fi
-
-if [ -d ~/.kube ]; then
-  for file in $(find ~/.kube -type f -name "*.yaml" -o -name "*.yml"); do
-      export KUBECONFIG=$KUBECONFIG:$file
-  done
-fi
-
-if [ -f ~/.config/vpn/env.sh ]; then
-    source ~/.config/vpn/env.sh
-fi
 
 eval "$(zoxide init zsh)"

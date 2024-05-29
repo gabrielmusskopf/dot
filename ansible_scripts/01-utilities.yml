@@ -1,15 +1,16 @@
 ---
 - name: Utilities
   hosts: localhost
-  become: yes
 
   tasks:
     - name: Update apt cache
+      become: yes
       when: ansible_os_family == 'Debian'
       apt:
         update_cache: yes
 
     - name: Install utilities
+      become: yes
       apt:
         state: present
         name:
@@ -18,9 +19,8 @@
           - tmux
           - ripgrep
 
-    - name: Download my .tmux.conf
-      get_url:
-        url: https://raw.githubusercontent.com/gabrielmusskopf/dotfiles/main/.tmux.conf
-        dest: "/home/{{ ansible_user }}/.tmux.conf"
-        force: true
-        mode: "0644"
+    - name: Download tmux plugin manager
+      git:
+        depth: 1
+        repo: "https://github.com/tmux-plugins/tpm"
+        dest: "~/.tmux/plugins/tpm"
