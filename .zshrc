@@ -28,6 +28,7 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#6c757d"
                                                                         # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	zsh-autosuggestions 
+    zsh-syntax-highlighting
 	history 
 )
 

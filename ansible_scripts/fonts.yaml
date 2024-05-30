@@ -3,7 +3,8 @@
   hosts: localhost
   become: yes
   vars:
-    nerd_font_url: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip"
+    jetbrains_mono_url: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/JetBrainsMono.zip"
+    symbols_url: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/NerdFontsSymbolsOnly.zip"
     font_tmp_dir: "/tmp/nerd-font"
     font_dest_dir: "/usr/local/share/fonts"
 
@@ -14,9 +15,15 @@
         state: directory
         mode: '0755'
 
-    - name: Download and unarchive
+    - name: Download and unarchive (1)
       unarchive:
-        src: "{{ nerd_font_url }}"
+        src: "{{ jetbrains_mono_url }}"
+        dest: "{{ font_tmp_dir }}"
+        remote_src: yes
+
+    - name: Download and unarchive (2)
+      unarchive:
+        src: "{{ symbols_url }}"
         dest: "{{ font_tmp_dir }}"
         remote_src: yes
 
