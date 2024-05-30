@@ -11,8 +11,18 @@ killall -q polybar
 # Wait until the processes have been shut down
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
-# Launch the bar
-polybar -q top -c "$DIR"/config.ini 2>/tmp/polybar-top.log &
-polybar -q bottom -c "$DIR"/config.ini 2>/tmp/polybar-bottom.log  &
+if type "xrandr"; then
+
+    # Make HDMI screen primary, if exist
+    HDMI=$(xrandr --query | grep " connected" | grep "HDMI" | cut -d" " -f1)
+    [ ! -z "$HDMI" ] &&  xrandr --output $HDMI --primary || xrandr --output eDP-1 --primary
+
+    # Launch primary
+    PRIMARY=$(xrandr --query | grep " connected" | grep "primary" | cut -d" " -f1)
+    MONITOR=$PRIMARY polybar top --config="$DIR"/config.ini --reload --log=trace 2>/tmp/polybar-top.log &
+
+else
+    polybar -q top -c "$DIR"/config.ini 2>/tmp/polybar-top.log &
+fi
 
 echo "polybar lauched"

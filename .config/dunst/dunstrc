@@ -1,9 +1,10 @@
 [global]
     follow = mouse
-    width = (111, 444)
-    height = 1000
-    origin: top-right
-    offset = 25x50
+    #width = (111, 444)
+    #height = 1000
+    geometry = "350x5-10+30"
+    origin = top-right
+    #offset = 25x50
 
     transparency = 3
     horizontal_padding = 11
@@ -87,7 +88,7 @@
     # * close_all: Close all notifications.
     mouse_left_click = do_action
     mouse_middle_click = close_all
-    mouse_right_click = close
+    mouse_right_click = close_current
 
     #mod1 = alt
     # Close notification.
