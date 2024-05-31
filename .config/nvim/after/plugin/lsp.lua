@@ -1,18 +1,26 @@
-local mason_ok, mason = pcall(require, 'mason')
-if not mason_ok then
-    print('Something went wrong:', mason)
-    return
-end
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    ensure_installed = { 'lua_ls', 'yamlls', 'pylsp', 'gopls' },
+    handlers = {
+        function(server_name)
+            require('lspconfig')[server_name].setup({})
+        end,
+    },
+})
 
-mason.setup()
+require('lsp-zero').preset('lsp-only').setup()
 
-local status, lsp = pcall(require, 'lsp-zero')
-if not status then
-    print('Something went wrong:', lsp)
-    return
-end
+local lspconfig = require('lspconfig')
 
-lsp.preset('lsp-only').setup()
+lspconfig.lua_ls.setup {
+    settings = {
+        Lua = {
+            diagnostics = {
+                disable = { "undefined-global" },
+            },
+        }
+    },
+}
 
 vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -61,23 +69,3 @@ vim.api.nvim_create_autocmd('LspDetach', {
         vim.lsp.buf.clear_references()
     end,
 })
-
-local ok, lspconfig = pcall(require, 'lspconfig')
-if not ok then
-    print('Something went wrong:', lspconfig)
-    return
-end
-
-lspconfig.lua_ls.setup {
-    settings = {
-        Lua = {
-            diagnostics = {
-                disable = { "undefined-global" },
-            },
-        }
-    },
-}
-
-lspconfig.gopls.setup {}
-lspconfig.jdtls.setup {}
-lspconfig.pyright.setup {}

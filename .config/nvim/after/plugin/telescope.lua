@@ -1,22 +1,15 @@
-local themes_status, themes = pcall(require, 'telescope.themes')
-if not themes_status then
-    print('Something went wrong:', themes)
-end
-
-local builtin_status, builtin = pcall(require, 'telescope.builtin')
-if not builtin_status then
-    print('Something went wrong:', builtin)
-end
-
+local themes = require('telescope.themes')
+local builtin = require('telescope.builtin')
 
 vim.keymap.set('n', '<leader>hk', function() builtin.keymaps(themes.get_ivy({})) end)
-vim.keymap.set('n', '<leader>pf', function() builtin.find_files(themes.get_ivy({ cwd = vim.g.first_path })) end, {})
 vim.keymap.set('n', '<leader>pb', function() builtin.buffers(themes.get_ivy({})) end)
+vim.keymap.set('n', '<leader>pf', function()
+    builtin.find_files(themes.get_ivy({ cwd = vim.g.first_path, hidden = true, follow = true }))
+end)
 vim.keymap.set('n', '<leader>ps', function()
     builtin.grep_string(themes.get_ivy({ cwd = vim.g.first_path, search = vim.fn.input("Grep > ") }))
 end)
 
---require("telescope").load_extension "file_browser"
 require('telescope').setup {
     defaults = {
         preview = {
@@ -35,9 +28,7 @@ require('telescope').setup {
                         end
                     end
                     vim.fn.jobstart(
-                        {
-                            'catimg', filepath
-                        },
+                        { 'catimg', filepath },
                         { on_stdout = send_output, stdout_buffered = true, pty = true })
                 else
                     require("telescope.previewers.utils").set_preview_message(bufnr, opts.winid,
@@ -46,20 +37,4 @@ require('telescope').setup {
             end
         },
     },
---    extensions = {
---        file_browser = {
---            theme = "ivy",
---            -- disables netrw and use telescope-file-browser in its place
---            hijack_netrw = true,
---            depth = 20,
---            mappings = {
---                ["i"] = {
---                    -- your custom insert mode mappings
---                },
---                ["n"] = {
---                    -- your custom normal mode mappings
---                },
---            },
---        },
---    },
 }
