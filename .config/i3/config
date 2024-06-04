@@ -246,3 +246,5 @@ exec --no-startup-id python ~/software/autorandr/autorandr.py --change
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id picom &>/tmp/picom.log
 exec_always --no-startup-id autotiling &> /tmp/autotiling.log
+exec_always ~/.config/i3/scripts/gnome-keyring.sh
+
