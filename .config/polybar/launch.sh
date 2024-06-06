@@ -20,7 +20,6 @@ if type "xrandr"; then
     # Launch primary
     PRIMARY=$(xrandr --query | grep " connected" | grep "primary" | cut -d" " -f1)
     MONITOR=$PRIMARY polybar top --config="$DIR"/config.ini --reload --log=trace 2>/tmp/polybar-top.log &
-
 else
     polybar -q top -c "$DIR"/config.ini 2>/tmp/polybar-top.log &
 fi

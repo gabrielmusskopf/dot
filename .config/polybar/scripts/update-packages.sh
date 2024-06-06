@@ -1,9 +1,14 @@
 #!/bin/bash
 
-apt_output=$(apt upgrade 2>&1 | grep "Instalados" | cut -d ' ' -f 2)
+pkgs="$(apt list --upgradable | wc -l)"
+notify-send "Upgrading $pkgs packages"
 
-# Obtém o número de pacotes atualizados usando o awk
-num_updated=$(echo "$apt_output" | awk -F/ '{print $1}')
+OUTPUT=$(sudo /usr/bin/apt upgrade -y 2>&1)
+EXIT_CODE=$?
 
-# Exibe a notificação com a porcentagem de pacotes atualizados
-notify-send "Atualização do APT" "Pacotes atualizados: $num_updated"
+if [ $EXIT_CODE -eq 0 ]; then
+    notify-send "Packages upgraded!"
+else
+    notify-send "Error upgrading packages:" "$OUTPUT"
+fi
+

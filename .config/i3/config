@@ -203,6 +203,7 @@ gaps inner 10
 
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui --clipboard
 bindsym $mod+b exec --no-startup-id brave-browser
+bindsym $mod+Shift+b exec --no-startup-id brave-browser --incognito
 bindsym $mod+Escape exec --no-startup-id systemctl suspend
 
 for_window [window_role="pop-up"] floating enable
@@ -241,7 +242,7 @@ client.urgent           $red $red $white $red $red
 # autostart
 
 #exec_always eval `ssh-agent`
-exec --no-startup-id feh --bg-fill ~/Imagens/wallpapers/spirited_away_001.jpg
+exec --no-startup-id feh --bg-fill ~/Imagens/wallpapers/_008.jpg
 exec --no-startup-id python ~/software/autorandr/autorandr.py --change
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id picom &>/tmp/picom.log
