@@ -1,6 +1,8 @@
 #https://wiki.archlinux.org/title/Xprofile
 
 #dunst &
+#autotiling &
+#autorandr --change &
 
 if [ -f ~/.ssh/agent.env ] ; then
     . ~/.ssh/agent.env > /dev/null

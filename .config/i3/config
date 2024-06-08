@@ -204,7 +204,7 @@ gaps inner 10
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui --clipboard
 bindsym $mod+b exec --no-startup-id brave-browser
 bindsym $mod+Shift+b exec --no-startup-id brave-browser --incognito
-bindsym $mod+Escape exec --no-startup-id systemctl suspend
+bindsym $mod+Shift+Escape exec --no-startup-id betterlockscreen --lock blur
 
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
@@ -213,39 +213,9 @@ for_window [class="Blueman-manager"] floating enable
 for_window [class="Cisco AnyConnect Secure Mobility Client"] floating enable
 for_window [class="copyq"] floating enable
 
-# set primary gruvbox colorscheme colors
-set $bg #282828
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $purple #b16286
-set $aqua #689d68
-set $gray #a89984
-set $ligthdarkgray #565859
-set $darkgray #1d2021
-
-# green gruvbox
-# class                 border|backgr|text|indicator|child_border
-#client.focused          $green $green $darkgray $purple $darkgray
-#client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
-#client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
-#client.urgent           $red $red $white $red $red
-
-# blue gruvbox
-# class                 border|backgr|text|indicator|child_border
-client.focused          $blue $blue $darkgray $purple $blue
-client.focused_inactive $darkgray $darkgray $yellow $purple $darkgray
-client.unfocused        $darkgray $darkgray $yellow $purple $darkgray
-client.urgent           $red $red $white $red $red
-
 # autostart
 
-#exec_always eval `ssh-agent`
-exec --no-startup-id feh --bg-fill ~/Imagens/wallpapers/_008.jpg
-exec --no-startup-id python ~/software/autorandr/autorandr.py --change
+exec ~/.config/i3/scripts/gnome-keyring.sh
+exec_always --no-startup-id feh --bg-fill ~/Imagens/wallpapers/_009.jpg
+exec_always --no-startup-id picom
 exec_always --no-startup-id ~/.config/polybar/launch.sh
-exec_always --no-startup-id picom &>/tmp/picom.log
-exec_always --no-startup-id autotiling &> /tmp/autotiling.log
-exec_always ~/.config/i3/scripts/gnome-keyring.sh
-
