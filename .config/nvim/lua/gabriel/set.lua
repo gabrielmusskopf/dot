@@ -28,3 +28,5 @@ vim.opt.ignorecase = true
 vim.opt.scrolloff = 15
 
 vim.opt.colorcolumn = "100"
+
+vim.opt.conceallevel = 2

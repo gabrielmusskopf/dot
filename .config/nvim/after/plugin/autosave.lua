@@ -3,6 +3,8 @@ if not ok then
     print('Something went wrong with autosave:', autosave)
 end
 
+--print('sourcing autosave.lua')
+
 autosave.setup({
     debounce_delay = 5000,
     execution_message = {

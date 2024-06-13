@@ -80,21 +80,14 @@ require('lazy').setup({
         "okuuva/auto-save.nvim"
     },
     {
-        "preservim/vim-pencil"
-    },
-    {
         "folke/zen-mode.nvim"
     },
     {
         'echasnovski/mini.surround', version = '*'
     },
-    -- {
-    --     "lervag/vimtex",
-    --     lazy = false,
-    --     init = function()
-    --         -- VimTeX configuration goes here
-    --     end
-    -- },
+    {
+        "epwalsh/obsidian.nvim", version = "*", lazy = true, ft = "markdown"
+    },
 
     -- LSP
     {
