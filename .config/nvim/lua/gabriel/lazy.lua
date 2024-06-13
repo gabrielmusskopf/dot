@@ -31,6 +31,7 @@ require('lazy').setup({
     { 'nvim-lualine/lualine.nvim',                  dependencies = { 'nvim-tree/nvim-web-devicons', opt = true } },
     { "okuuva/auto-save.nvim" },
     { "folke/zen-mode.nvim" },
+    { "preservim/vim-pencil" },
     { 'echasnovski/mini.surround',                  version = '*' },
     { "epwalsh/obsidian.nvim",                      version = "*",                                                              lazy = true, ft = "markdown" },
     {

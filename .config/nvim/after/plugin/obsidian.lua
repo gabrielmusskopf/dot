@@ -1,7 +1,9 @@
 vim.api.nvim_set_keymap("n", "<leader>ob", ':ObsidianBacklinks<CR>', {})
-vim.api.nvim_set_keymap("n", "<leader>od", ':ObsidianFollowLink<CR>', {})
+vim.api.nvim_set_keymap("n", "<leader>of", ':ObsidianFollowLink<CR>', {})
 vim.api.nvim_set_keymap("n", "<leader>on", ':ObsidianNew ', {})
 vim.api.nvim_set_keymap("n", "<leader>ot", ':ObsidianTemplate<CR>', {})
+vim.api.nvim_set_keymap("n", "<leader>oo", ':ObsidianToday<CR>', {})
+vim.api.nvim_set_keymap("n", "<leader>oe", ':ObsidianYesterday<CR>', {})
 
 -- https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#highlight
 vim.api.nvim_set_hl(0, "@markup.strong.markdown_inline", { link = "ObsidianTodo" })
