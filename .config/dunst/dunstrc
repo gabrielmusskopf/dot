@@ -16,6 +16,7 @@
     sort = yes
 
     idle_threshold = 140
+    ignore_dbusclose = true
 
     font = JetBrainsMonoNL Nerd Font 11
     line_height = 0
@@ -74,7 +75,15 @@
     foreground = "#ebdbb2"
     frame_color = "#689d69"
     highlight = "#8ec07c"
-    timeout = 10
+    timeout = 2
+
+[brave]
+    appname = Brave
+    background = "#1c1c1ccc"
+    foreground = "#ebdbb2"
+    frame_color = "#689d69"
+    highlight = "#8ec07c"
+    timeout = 5
 
 [urgency_critical]
     background = "#1c1c1ccc"
