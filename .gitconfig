@@ -1,0 +1,16 @@
+[user]
+	name = Gabriel Musskopf
+[init]
+	defaultBranch = main
+[alias]
+    st = status
+	co = checkout
+	cb = checkout -b
+    cp = cherry-pick
+    aa = add --all
+    pr = pull --rebase
+    ss = stash save
+    sp = stash pop
+    cm = commit -m
+    ca = commit --amend --no-edit
+    cam = commit --amend
