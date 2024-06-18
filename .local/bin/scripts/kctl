@@ -1,0 +1,21 @@
+#!/bin/bash
+
+function usage() {
+    echo "kctl [cluster] [kubectl commands]"
+}
+
+
+cluster="$1"
+if [[ -z "$cluster" ]]; then
+    echo "ERROR: No cluster defined!"
+    usage
+    exit 1
+fi
+
+if ! [[ -f "$HOME/.kube/$cluster" ]]; then
+    echo "ERROR: Cluster $cluster not found in $HOME/.kube dir!"
+    usage
+    exit 1
+fi
+
+kubectl --kubeconfig=$HOME/.kube/$cluster "${@:2}"

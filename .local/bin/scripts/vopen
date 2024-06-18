@@ -1,0 +1,4 @@
+#!/bin/bash
+
+term="$1"
+ag "$term" |  grep -E '^[^0-9]'| awk -F':' '{ print "f_name=" $1 " "f_line=" $2 }' | fzf --preview "bat -r $f_line"

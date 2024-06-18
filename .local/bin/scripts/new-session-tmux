@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Verifica se o Tmux está em execução e não está dentro de uma sessão existente
+if [ -z "$TMUX" ] && [ -z "$SSH_CONNECTION" ]; then
+    # Inicia o Tmux e define o diretório inicial
+    tmux new-session -s home -c "$HOME"
+fi
+

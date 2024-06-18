@@ -1,0 +1,66 @@
+#!/usr/bin/bash
+
+command_name="fcommit"
+cmd_entered=$1
+message=$2
+
+command_abrv=$(echo $cmd_entered | sed 's/-//g')
+command=""
+
+actions=("-ft" "-fx" "-tt" "-ch" "-st" "-rf", "-dc")
+
+function help_message(){
+    echo -e "uso: $command_name [-h | --help] [-ft | -fx | -ch | -tt | -st | -dc] \"[<mensagem do commit>]\"\n"
+    echo -e "Opções: \nft:\t[feat]\tNova funcionalidade\nfx:\t[fix]\tCorreção de funcionalidade existente\ntt:\t[test]\tAdição/correção de cenários de teste\nch:\t[chore]\tAlteração de dependências\nst:\t[style]\tAlteração somente na formatação\nrf\t[refactor]\tRefatorar funcionalidade existente\n[documentation]\tAdicionar/alterar documentação\n"
+}
+
+case $command_abrv in 
+    h|help)
+        help_message
+        exit 1
+        ;;
+    ft)
+        command="feat"
+        ;;
+    fx)
+        command="fix"
+        ;;
+    ch)
+        command="chore"
+        ;;
+    tt)
+        command="test"
+        ;;
+    st)
+        command="style"
+        ;;
+    rf)
+        command="refactor"
+        ;;
+    dc)
+        command="docs"
+        ;;
+    *)
+        echo "opção $cmd_entered desconhecida"
+        help_message
+        exit 1
+        ;;
+esac
+
+if [ "$2" = "" ]
+then
+    echo "Deve ser informada a mensagem do commit"
+    exit 1
+fi
+
+if ! [ -d .git ]; then
+    echo "Deve estar em um repositório git"
+    exit 1
+fi;
+
+branch=$(git branch --show-current)
+branch_num=$(git branch --show-current | sed 's/[^0-9]//g' | awk '$0 ~ /[0-9]/{ print "("$0")" }')
+
+commit_msg="$command$branch_num: $message"
+
+git commit -m "$commit_msg"

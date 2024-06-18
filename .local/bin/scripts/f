@@ -1,0 +1,8 @@
+#!/bin/bash
+
+file=$(rg -i --hidden --line-number $1 --with-filename . --field-match-separator ' ' | fzf --preview "bat --color=always {1} --highlight-line {2}" --preview-window ~8,+{2}-5)
+
+file=$(echo $file | awk '{print $1}')
+[ -z "$file" ] && exit
+
+exec nvim "$file"

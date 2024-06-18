@@ -1,0 +1,10 @@
+#!/bin/bash
+
+path=$1 
+
+if [ ! -d "$path" ]; then
+    exit 1
+fi
+
+#echo "..."
+echo $(du -sh "$path" | cut -f1)

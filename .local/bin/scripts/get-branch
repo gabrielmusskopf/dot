@@ -1,0 +1,7 @@
+#!/bin/bash
+
+folder="$1"
+
+if ! git rev-parse -C $folder --is-inside-work-tree &> /dev/null; then
+    echo $(git -C $folder branch --show-current)
+fi

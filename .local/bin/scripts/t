@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# Tmux simple session manager
+# 
+# Switch between sessions, creating a new one if it doesnt exist.
+
+
+# Check is tmux client is running
+# return: 0 if not running, or 1 if it is
+is_client_running() {
+    if command -v tmux &> /dev/null && [ -n "$TMUX" ]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# Change current session to provided one. If session does not exist, create a new one. 
+# If tmux is not running, attatch to session, otherwise, switch to it
+#
+# param 1: session name
+# param 2: session starting folder
+# return:  void
+# 
+# example: change "home" "~/"
+change() {
+    sname="$1"
+    folder="$2"
+
+    if ! tmux has-session -t=$sname 2> /dev/null; then
+        tmux new-session -ds $sname -c "$folder"
+    fi
+
+    if ! is_client_running; then
+        tmux attach-session -t $sname
+    else
+        tmux switch-client -t $sname
+    fi
+}
+
+path="$1"
+
+folder=""
+if [[ -z $path ]]; then
+    # Go to existing session
+    session_name=$(tmux ls -F '#S' | fzf --no-preview)
+    change "$session_name"
+    exit 0
+
+elif [[ "$path" == "-h" ]]; then
+    # Go to home
+    session_name="home"
+
+    if [[ "$2" == "-n" ]]; then
+        # Go to home but with specified tmux session name
+        # t -h -n myname
+        session_name="$3"
+    fi
+
+    change $session_name "~/"
+    exit 0
+
+else 
+    # Go to folder specified. First tries with zoxide, and, if it is not mapped, search with fdfind
+    # After the folder is found, its path is added in zoxide
+    
+    folder=$(zoxide query "$path" 2>/dev/null || echo "zoxide não conhece" | fdfind -t d . ~/ | fzf --reverse --height 80% --header "Selecione uma pasta de $(whoami):" -q "$path")
+    if [[ $folder != "" ]]; then
+        zoxide add $folder
+    fi
+fi
+
+if [[ -d "$folder" ]]; then
+    session_name=$(basename "$folder" | sed 's/\./-/g')
+    change "$session_name" "$folder"
+fi

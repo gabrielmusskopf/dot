@@ -1,0 +1,26 @@
+#!/bin/bash
+
+
+function status() {
+    echo "󰍬"
+}
+
+function use() {
+    echo "󰍬"
+}
+
+function mute() {
+    echo ""
+}
+
+case $1 in
+    "status") status;;
+    "use") use;;
+    "mute") mute;;
+    *) 
+        echo "Opção inválida!"
+        usage
+        exit 1
+        ;;
+esac
+
