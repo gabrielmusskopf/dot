@@ -6,9 +6,9 @@ end
 --print('sourcing autosave.lua')
 
 autosave.setup({
-    debounce_delay = 5000,
+    debounce_delay = 15000,
     execution_message = {
-        cleaning_interval = 5000,
+        cleaning_interval = 15000,
         message = function()
             return ("saved at " .. vim.fn.strftime("%H:%M:%S"))
         end,

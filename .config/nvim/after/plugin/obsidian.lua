@@ -19,7 +19,7 @@ require("obsidian").setup({
     new_notes_location = "notes_subdir",
     templates = {
         folder = "Templates",
-        date_format = "%YYYY-%MM-%DD",
+        date_format = "%d/%m/%Y",
         time_format = "%hh:%mm",
     },
     disable_frontmatter = true, -- metadata
@@ -28,7 +28,7 @@ require("obsidian").setup({
     },
     daily_notes = {
         folder = "Daily",
-        date_format = "%d-%m-%Y",
+        date_format = "%d/%m/%Y",
         template = "daily.md"
     },
     ui = {

@@ -32,6 +32,8 @@ plugins=(
 	history 
 )
 
+#bindkey '^I' autosuggest-accept                                         # Tab to accept autosuggestion
+
 # colorscript random
 # neofetch
 

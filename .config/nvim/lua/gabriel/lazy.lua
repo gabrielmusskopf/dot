@@ -32,6 +32,7 @@ require('lazy').setup({
     { "okuuva/auto-save.nvim" },
     { "folke/zen-mode.nvim" },
     { "preservim/vim-pencil" },
+    { "tpope/vim-fugitive" },
     { 'echasnovski/mini.surround',                  version = '*' },
     { "epwalsh/obsidian.nvim",                      version = "*",                                                              lazy = true, ft = "markdown" },
     {
@@ -40,6 +41,7 @@ require('lazy').setup({
         ft = { "markdown", "md" },
         build = function() vim.fn["mkdp#util#install"]() end,
     },
+    { "nvim-telescope/telescope-frecency.nvim" },
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.6',
@@ -51,11 +53,11 @@ require('lazy').setup({
     { 'hrsh7th/cmp-nvim-lsp-signature-help' },
     { 'williamboman/mason.nvim' },
     { 'williamboman/mason-lspconfig.nvim' },
-    { 'VonHeikemen/lsp-zero.nvim',          branch = 'v3.x' },
+    { 'VonHeikemen/lsp-zero.nvim',             branch = 'v3.x' },
     { 'neovim/nvim-lspconfig' },
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/nvim-cmp' },
     { 'hrsh7th/cmp-path' },
     { "rafamadriz/friendly-snippets" },
-    { 'L3MON4D3/LuaSnip',                   dependencies = { 'rafamadriz/friendly-snippets' } },
+    { 'L3MON4D3/LuaSnip',                      dependencies = { 'rafamadriz/friendly-snippets' } },
 })

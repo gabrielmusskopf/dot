@@ -20,8 +20,8 @@ vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
 
 -- :cclose to close quickfix list
-vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>")
-vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>")
+vim.keymap.set("n", "<]c>", "<cmd>cnext<CR>")
+vim.keymap.set("n", "<[c>", "<cmd>cprev<CR>")
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>")
 

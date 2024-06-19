@@ -9,7 +9,7 @@ zenmode.setup({
         -- * an absolute number of cells when > 1
         -- * a percentage of the width / height of the editor when <= 1
         -- * a function that returns the width or the height
-        width = 0.6,
+        width = 0.85,
         height = 0.9,
         options = {
             signcolumn = "no",
@@ -22,6 +22,6 @@ zenmode.setup({
         },
     },
     plugins = {
-        tmux = { enabled = true },
+        tmux = { enabled = false },
     },
 })
