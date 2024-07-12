@@ -1,0 +1,13 @@
+#!/bin/bash
+
+if ! command -v kubectl &> /dev/null; then
+    echo "kubectl could not be found"
+    exit 1
+fi
+
+ctx=$(kubectl config get-contexts -o name | fzf --reverse --height 80%)
+
+if [ -n "$ctx" ]; then
+    kubectl config use $ctx
+fi
+

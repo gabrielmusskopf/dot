@@ -218,6 +218,7 @@ for_window [class="Dunst"] floating enable
 for_window [class="Blueman-manager"] floating enable
 for_window [class="Cisco AnyConnect Secure Mobility Client"] floating enable
 for_window [class="copyq"] floating enable
+for_window [class="Gnome-calculator"] floating enable
 
 # set primary gruvbox colorscheme colors
 set $bg #282828

@@ -27,16 +27,19 @@ SPACESHIP_CHAR_SYMBOL='| '
 SPACESHIP_PROMPT_ORDER=(
   time          # Current time
   host          # Hostname section
-  user          # Username section
+  # user          # Username section
   dir           # Current directory section
   git           # Git section (git_branch + git_status)
   #git_status
   #git_branch
-  exec_time     # Execution time
   async         # Async jobs indicator
   #line_sep      # Line break
   jobs          # Background jobs indicator
-  exit_code     # Exit code section
   sudo          # Sudo indicator
   char          # Prompt character
+)
+
+SPACESHIP_RPROMPT_ORDER=(
+  exec_time     # Execution time
+  exit_code     # Exit code section
 )

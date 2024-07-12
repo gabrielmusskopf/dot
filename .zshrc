@@ -84,6 +84,7 @@ alias stash="git stash"
 alias add="git add"
 alias restore="git restore"
 alias cherry-pick="git cherry-pick"
+alias k="kubectl"
 alias vdir="nvim ~/.config/nvim/"                                       # neovim config dir
 alias config="/usr/bin/git -C $HOME/dot/"                               # dotfiles managed with stow
 alias sudoenv="sudo -E env 'PATH=$PATH'"                                # user envs as root
@@ -101,6 +102,7 @@ export NOTES_INBOX=$HOME/notes/00-inbox/
 #export PATH=$PATH:$HOME/.asdf/installs/golang/1.20.3/packages/bin
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$HOME/.local/bin/scripts:$PATH
+export PATH=$HOME/.cargo/bin:$PATH
 export JAVA_HOME=$(asdf where java)
 export BG_COLOR="#181818"
 

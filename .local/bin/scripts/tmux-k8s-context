@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if ! command -v kubectl &> /dev/null; then
+    echo "kubectl could not be found"
+    exit 0
+fi
+
+current_context=$(kubectl config current-context 2>/dev/null)
+
+if [ -n "$current_context" ]; then
+  echo "[󱃾 $current_context]"
+fi

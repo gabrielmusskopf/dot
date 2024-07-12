@@ -33,6 +33,7 @@ require('lazy').setup({
     { "folke/zen-mode.nvim" },
     { "preservim/vim-pencil" },
     { "tpope/vim-fugitive" },
+    { "lewis6991/gitsigns.nvim" },
     { 'echasnovski/mini.surround',                  version = '*' },
     { "epwalsh/obsidian.nvim",                      version = "*",                                                              lazy = true, ft = "markdown" },
     {

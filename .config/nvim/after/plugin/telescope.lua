@@ -1,13 +1,14 @@
-local themes = require('telescope.themes')
 local builtin = require('telescope.builtin')
 local telescope = require('telescope')
 
 vim.keymap.set('n', '<leader>hk', builtin.keymaps)
 vim.keymap.set('n', '<leader>pb', builtin.buffers)
-
-vim.keymap.set('n', '<leader>pf', telescope.extensions.frecency.frecency)
---builtin.find_files(themes.get_ivy({ , hidden = true, follow = true }))
---
+vim.keymap.set('n', '<leader>pf', function()
+    builtin.find_files({ hidden = true, follow = true })
+    -- telescope.extensions.frecency.frecency({
+    --     workspace = "CWD",
+    -- })
+end)
 vim.keymap.set('n', '<leader>ps', function()
     builtin.live_grep({
         cwd = vim.g.first_path,
