@@ -70,6 +70,19 @@ else
     ssh-add
 fi
 
+# set JAVA_HOME on every change directory
+# https://github.com/halcyon/asdf-java/issues/51#issuecomment-611049565
+function asdf_update_java_home {
+  asdf current java 2>&1 > /dev/null
+  if [[ "$?" -eq 0 ]]
+  then
+      export JAVA_HOME=$(asdf where java)
+  fi
+}
+
+precmd() { asdf_update_java_home; }
+# end set JAVA_HOME
+
 
 # aliases                                                               # For a complete list, run `alias`
 alias notes="nvim $NOTES"
