@@ -14,6 +14,7 @@ require('mason-lspconfig').setup({
 
 
 local lspconfig = require('lspconfig')
+local configs = require('lspconfig.configs')
 
 lspconfig.lua_ls.setup {
     settings = {
@@ -24,6 +25,28 @@ lspconfig.lua_ls.setup {
         }
     },
 }
+
+lspconfig.pylsp.setup {
+    settings = {
+        pylsp = {
+            configurationSources = { "pycodestyle" },
+            plugins = {
+                pycodestyle = {
+                    ignore = { "E501" } -- line too long
+                }
+            }
+        }
+    }
+}
+
+configs.ast_grep = {
+    default_config = {
+        cmd = { 'ast-grep', 'lsp' },
+        single_file_support = false,
+        root_dir = lspconfig.util.root_pattern('sgconfig.yml'),
+    },
+}
+
 
 -- lspconfig.jdtls.setup {
 --     setup = {
@@ -134,14 +157,14 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 
 vim.o.updatetime = 3000
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" },
-    {
-        group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-        callback = function()
-            vim.diagnostic.open_float(nil, { focus = false })
-        end
-    }
-)
+-- vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" },
+--     {
+--         group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
+--         callback = function()
+--             vim.diagnostic.open_float(nil, { focus = false })
+--         end
+--     }
+-- )
 
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -166,6 +189,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end, opts)
         vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, opts)
+        vim.keymap.set('n', '<space>d', function()
+            vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+        end)
     end,
 })
 

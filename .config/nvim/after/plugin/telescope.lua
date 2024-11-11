@@ -16,6 +16,11 @@ vim.keymap.set('n', '<leader>ps', function()
     })
 end)
 
+local status, utils = pcall(require, "gabriel.utils")
+if status then
+    utils.set_hl("TelescopeBorder", { bg = "none" })
+end
+
 telescope.setup {
     -- https://github.com/nvim-telescope/telescope.nvim/issues/848#issuecomment-1584291014
     defaults = vim.tbl_extend(

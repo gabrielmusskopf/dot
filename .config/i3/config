@@ -171,16 +171,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym ccedilla resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym j resize shrink height 5 px or 5 ppt
+        bindsym l resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -219,6 +219,7 @@ for_window [class="Blueman-manager"] floating enable
 for_window [class="Cisco AnyConnect Secure Mobility Client"] floating enable
 for_window [class="copyq"] floating enable
 for_window [class="Gnome-calculator"] floating enable
+for_window [class="Org.gnome.Nautilus"] floating enable
 
 # set primary gruvbox colorscheme colors
 set $bg #282828
@@ -249,7 +250,7 @@ client.urgent           $red $red $white $red $red
 # autostart
 
 exec ~/.config/i3/scripts/gnome-keyring.sh
-exec_always --no-startup-id feh --bg-fill ~/Imagens/wallpapers/_009.jpg
+exec_always --no-startup-id feh --bg-fill ~/Imagens/wallpapers/_008.jpg
 exec_always --no-startup-id dunst > /tmp/dunst.log
 exec_always --no-startup-id picom > /tmp/picom.log
 exec_always --no-startup-id ~/.config/polybar/launch.sh

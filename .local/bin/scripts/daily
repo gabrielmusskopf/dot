@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ -z "$NOTES_PATH" ]; then
+    arquivo="$HOME/daily.md"
+else
+    arquivo="$NOTES_PATH/daily.md"
+fi
+
+data=$(date +"%d de %B de %Y")
+hora=$(date +"%H:%M")
+
+template="
+# $data
+
+
+
+Criado em $hora
+
+---
+"
+
+if [ ! -f "$arquivo" ]; then
+    touch "$arquivo"
+fi
+
+if ! grep -q "^# $data" "$arquivo"; then
+    echo -e "$template$(cat "$arquivo")" > "$arquivo"
+fi
+
+if command -v nvim &> /dev/null; then
+    nvim "$arquivo"
+else
+    xdg-open "$arquivo"
+fi

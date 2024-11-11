@@ -1,0 +1,21 @@
+#!/bin/bash
+
+apis=$(ps aux | grep java | grep back.jar | awk '{print $17 "\t(pid: " $2 ")"}')
+
+if [ -z "$apis" ]; then
+    echo "Nothing is running"
+    exit 0
+fi
+
+echo "Running APIs:"
+echo "$apis"
+echo ""
+
+read -p "Kill these? (y/N): " confirm
+
+if [[ "$confirm" == "y" ]]; then
+    ps aux | grep java | grep back.jar | awk '{print $2}' | xargs kill -9
+    echo "Done!"
+else
+    echo "Okay. Bye!"
+fi

@@ -1,0 +1,47 @@
+#!/bin/bash
+
+LOCK_FILE="/tmp/sync_script.lock"
+
+if [[ -e "$LOCK_FILE" ]]; then
+    exit 0
+fi
+
+trap 'rm -f "$LOCK_FILE"' EXIT
+touch "$LOCK_FILE"
+
+INTERVALO=600  # 600 segundos = 10 minutos
+
+cd "$NOTES" || exit 1
+
+REMOTE_URL=$(git remote get-url origin 2>/dev/null)
+if [[ -z $REMOTE_URL ]]; then
+    echo "Erro: Nenhum repositório remoto configurado. Adicione um 'origin' remoto para continuar."
+    exit 1
+fi
+
+USER_NAME=$(git config --get user.name)
+USER_EMAIL=$(git config --get user.email)
+if [[ -z $USER_NAME || -z $USER_EMAIL ]]; then
+    echo "Erro: Configurações de 'user.name' e/ou 'user.email' não encontradas."
+    echo "Defina-as usando os comandos abaixo e tente novamente:"
+    echo "git config --global user.name 'Seu Nome'"
+    echo "git config --global user.email 'seu-email@example.com'"
+    exit 1
+fi
+
+echo "Configurações verificadas. Iniciando monitoramento de alterações no repositório."
+
+while true; do
+    git fetch origin
+
+    if [[ -n $(git status --porcelain) ]]; then
+        MENSAGEM="Sync $(date '+%H:%M %d/%m/%Y')"
+
+        git add .
+        git commit -m "$MENSAGEM"
+        git push origin main
+    fi
+
+    sleep "$INTERVALO"
+done
+

@@ -1,11 +1,16 @@
 function Color(color)
-    color = color or "gruvbox"
+    --color = color or "gruvbox"
+    color = color or "kanagawa"
     vim.cmd.colorscheme(color)
 
     vim.o.background = "dark"
-    vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
-    vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
-    vim.api.nvim_set_hl(0, "Whitespace", { fg = "#292d2f" })
+
+    local utils = require("gabriel.utils")
+    utils.set_hl("Normal", { bg = "none" })
+    utils.set_hl("NormalFloat", { bg = "none" })
+    utils.set_hl("Whitespace", { fg = "#292d2f" })
+    utils.set_hl("LineNr", { bg = "none" })
+    utils.set_hl("SignColumn", { bg = "none" })
 end
 
 Color()

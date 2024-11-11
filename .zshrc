@@ -83,7 +83,6 @@ function asdf_update_java_home {
 precmd() { asdf_update_java_home; }
 # end set JAVA_HOME
 
-
 # aliases                                                               # For a complete list, run `alias`
 alias notes="nvim $NOTES"
 alias g="git"                                                           # git aliases
@@ -111,6 +110,7 @@ alias games="ls /usr/games/"
 
 export NOTES=$HOME/notes/
 export NOTES_INBOX=$HOME/notes/00-inbox/
+export NOTES_PATH=$HOME/notes/01-Main\ Notes
 #export PATH=$HOME/jdtls/bin:$PATH
 #export PATH=$PATH:$HOME/.asdf/installs/golang/1.20.3/packages/bin
 export PATH=$HOME/.local/bin:$PATH

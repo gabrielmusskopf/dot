@@ -179,12 +179,12 @@ local function jdtls_setup()
         '-Dlog.protocol=true',
         '-Dlog.level=ALL',
         '-javaagent:' .. path.java_agent,
-        '-Xms1g',
-        '--add-modules=ALL-SYSTEM',
-        '--add-opens',
-        'java.base/java.util=ALL-UNNAMED',
-        '--add-opens',
-        'java.base/java.lang=ALL-UNNAMED',
+        '-Xms100m',
+        '-Xmx512m',
+        -- '--add-modules=ALL-SYSTEM',
+        -- '--add-opens',
+        -- 'java.base/java.util=ALL-UNNAMED',
+        -- 'java.base/java.lang=ALL-UNNAMED',
 
         -- 💀
         '-jar',
@@ -201,11 +201,12 @@ local function jdtls_setup()
 
     local lsp_settings = {
         java = {
-            -- jdt = {
-            --   ls = {
-            --     vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
-            --   }
-            -- },
+            jdt = {
+                ls = {
+                    -- vmargs = "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m"
+                    vmargs = "-Xmx512m -Xms100m"
+                }
+            },
             eclipse = {
                 downloadSources = true,
             },

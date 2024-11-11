@@ -23,7 +23,7 @@ set incsearch
 set nu
 set visualbell
 set noerrorbells
-set relativenumber
+#set relativenumber
 #set clipboard+=unnamed
 #set clipboard+=ideaputn
 

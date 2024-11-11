@@ -15,3 +15,5 @@
     ca = commit --amend --no-edit
     cam = commit --amend
     po = push --set-upstream origin
+[core]
+	editor = nvim
