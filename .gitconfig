@@ -14,6 +14,6 @@
     cm = commit -m
     ca = commit --amend --no-edit
     cam = commit --amend
-    po = push --set-upstream origin
+    pu = push -u origin $(git branch --show-current)
 [core]
 	editor = nvim

@@ -38,6 +38,7 @@ plugins=(
 # neofetch
 
 source $ZSH/oh-my-zsh.sh
+source ~/.local/bin/scripts/j
 
 if [ -f ~/.asdf/asdf.sh ]; then
     . $HOME/.asdf/asdf.sh

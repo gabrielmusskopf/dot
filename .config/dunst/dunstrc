@@ -31,7 +31,10 @@
     stack_duplicates = true
     hide_duplicate_count = false
     show_indicators = yes
-    progress_bar = yes
+    #progress_bar = yes
+
+    frame_time = 10
+    progress_bar = top_to_bottom
 
     icon_position = left
     max_icon_size = 32
