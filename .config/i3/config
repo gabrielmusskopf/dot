@@ -220,6 +220,7 @@ for_window [class="Cisco AnyConnect Secure Mobility Client"] floating enable
 for_window [class="copyq"] floating enable
 for_window [class="Gnome-calculator"] floating enable
 for_window [class="Org.gnome.Nautilus"] floating enable
+for_window [class="Evolution-alarm-notify"] floating enable
 
 # set primary gruvbox colorscheme colors
 set $bg #282828

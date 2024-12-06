@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if ! command -v kubectl &> /dev/null; then
+    echo "kubectl could not be found"
+    exit 1
+fi
+
+if ! command -v fzf &> /dev/null; then
+    echo "fzf could not be found"
+    exit 1
+fi
+
+if [[ "$1" == "--clear" ]]; then
+    kubectl config set-context --current --namespace=""
+    exit 0
+fi
+
+namespaces=$(kubectl get namespaces -o jsonpath='{.items[*].metadata.name}')
+selected_ns=$(echo "$namespaces" | tr ' ' '\n' | fzf --reverse --height 80%)
+
+if [[ -n "$selected_ns" ]]; then
+    kubectl config set-context --current --namespace="$selected_ns"
+fi
+

@@ -5,8 +5,15 @@ if ! command -v kubectl &> /dev/null; then
     exit 0
 fi
 
-current_context=$(kubectl config current-context 2>/dev/null)
+current_ctxt=$(kubectl config current-context 2>/dev/null)
+current_ns=$( kubectl config view --minify --output 'jsonpath={..namespace}')
 
-if [ -n "$current_context" ]; then
-  echo "[󱃾 $current_context]"
+if [ -n "$current_ctxt" ]; then
+  s="[󱃾 $current_ctxt"
+    if [ -n "$current_ns" ]; then
+        s+=" ($current_ns)"
+    fi
+  s+="]"
+  echo $s
 fi
+
