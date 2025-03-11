@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scheme name="AlacrittyTheme" version="1">
+    <option name="editorFontSize" value="14" />
+    <colors>
+        <option name="FOREGROUND" value="0xD5C4A1" />
+        <option name="BACKGROUND" value="0x1D2021" />
+        <option name="CARET_COLOR" value="0xD5C4A1" />
+        <option name="LINE_NUMBER_COLOR" value="0x665C54" />
+        <option name="SELECTION_BACKGROUND" value="0x3C3836" />
+        <option name="SELECTION_FOREGROUND" value="0xFBF1C7" />
+    </colors>
+    <attributes>
+        <option name="DEFAULT_TEXT">
+            <value>
+                <option name="FOREGROUND" value="0xD5C4A1" />
+            </value>
+        </option>
+        <option name="KEYWORD">
+            <value>
+                <option name="FOREGROUND" value="0xFABD2F" />
+                <option name="FONT_TYPE" value="1" />
+            </value>
+        </option>
+        <option name="STRING">
+            <value>
+                <option name="FOREGROUND" value="0xB8BB26" />
+            </value>
+        </option>
+        <option name="NUMBER">
+            <value>
+                <option name="FOREGROUND" value="0x8EC07C" />
+            </value>
+        </option>
+        <option name="OPERATION_SIGN">
+            <value>
+                <option name="FOREGROUND" value="0xFE8019" />
+            </value>
+        </option>
+        <option name="BRACES">
+            <value>
+                <option name="FOREGROUND" value="0xD3869B" />
+            </value>
+        </option>
+        <option name="COMMENT">
+            <value>
+                <option name="FOREGROUND" value="0x928374" />
+                <option name="FONT_TYPE" value="2" />
+            </value>
+        </option>
+        <option name="CONSTANT">
+            <value>
+                <option name="FOREGROUND" value="0xFB4934" />
+            </value>
+        </option>
+        <option name="FUNCTION_DECLARATION">
+            <value>
+                <option name="FOREGROUND" value="0x83A598" />
+            </value>
+        </option>
+        <option name="CLASS_NAME">
+            <value>
+                <option name="FOREGROUND" value="0x8EC07C" />
+                <option name="FONT_TYPE" value="1" />
+            </value>
+        </option>
+        <option name="ANNOTATION">
+            <value>
+                <option name="FOREGROUND" value="0xD3869B" />
+                <option name="FONT_TYPE" value="1" />
+            </value>
+        </option>
+        <option name="INTERFACE_NAME">
+            <value>
+                <option name="FOREGROUND" value="0x83A598" />
+            </value>
+        </option>
+    </attributes>
+</scheme>
+

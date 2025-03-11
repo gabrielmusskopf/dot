@@ -10,7 +10,7 @@ function Color(color)
     utils.set_hl("NormalFloat", { bg = "none" })
     utils.set_hl("Whitespace", { fg = "#292d2f" })
     utils.set_hl("LineNr", { bg = "none" })
-    utils.set_hl("SignColumn", { bg = "none" })
+    --utils.set_hl("SignColumn", { bg = "none" })
 end
 
 Color()

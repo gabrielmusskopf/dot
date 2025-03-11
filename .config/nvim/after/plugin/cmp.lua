@@ -4,6 +4,7 @@ local mapping = cmp.mapping
 local cmp_action = require('lsp-zero').cmp_action()
 local cmp_format = require('lsp-zero').cmp_format({ details = true })
 
+require("luasnip.loaders.from_lua").lazy_load()
 require('luasnip.loaders.from_vscode').lazy_load()
 
 cmp.setup({
@@ -18,8 +19,8 @@ cmp.setup({
         documentation = config.window.bordered(),
     },
     mapping = mapping.preset.insert({
-        ['<C-f>'] = cmp_action.luasnip_jump_forward(),
-        ['<C-b>'] = cmp_action.luasnip_jump_backward(),
+        ['<Tab>'] = cmp_action.luasnip_jump_forward(),
+        ['<S-Tab>'] = cmp_action.luasnip_jump_backward(),
         ['<C-Space>'] = mapping.complete(),
         ['<C-e>'] = mapping.abort(),
         ['<CR>'] = mapping.confirm({ select = true }),
@@ -28,7 +29,6 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
-        --{ name = 'buffer' },
     }),
     formatting = cmp_format
 })

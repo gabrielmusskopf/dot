@@ -1,34 +1,34 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Open file explorer" })
 
 -- slit panes movement
-vim.keymap.set("n", "<C-l>", "<C-W>l")
-vim.keymap.set("n", "<C-h>", "<C-W>h")
+vim.keymap.set("n", "<leader>v", "<cmd>vsplit<CR><C-l><CR>", { desc = "Vertical split" })
+vim.keymap.set("n", "<C-l>", "<C-W>l", { desc = "Move to left pane" })
+vim.keymap.set("n", "<C-h>", "<C-W>h", { desc = "Move to right pane" })
 
 -- jump
-vim.keymap.set("n", "<C-n>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-n>", "<C-d>zz", { desc = "Jump page down" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Jump page up" })
 
 -- next greatest remap ever :
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
+vim.keymap.set({ "n", "v" }, "<leader>y", '"+y', { desc = "Yank/copy to clipboard" })
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, { desc = "LSP format file" })
 
 -- :cclose to close quickfix list
-vim.keymap.set("n", "<]c>", "<cmd>cnext<CR>")
-vim.keymap.set("n", "<[c>", "<cmd>cprev<CR>")
+vim.keymap.set("n", "]c", "<cmd>cnext<CR>", { desc = "Next on quickfix list" })
+vim.keymap.set("n", "[c", "<cmd>cprev<CR>", { desc = "Previous on quickfix list" })
 vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>")
 vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>")
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left><Left>]])
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
-
-vim.keymap.set("n", "<leader>v", "<cmd>vsplit<CR><C-l><CR>")
+vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left><Left>]], { desc = "Replace word" })
+vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true, desc = "Make the current file executable" })
+vim.keymap.set({ "n", "v" }, "<leader>jq", "!!jq .<CR>", { silent = true, desc = "Format JSON with jq" })
+vim.keymap.set('n', '<leader><leader>', '<C-^>', { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight when yanking (copying) text',

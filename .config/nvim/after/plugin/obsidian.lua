@@ -1,3 +1,8 @@
+local ok, obsidian = pcall(require, "obsidian")
+if not ok then
+    return
+end
+
 vim.api.nvim_set_keymap("n", "<leader>ob", ':ObsidianBacklinks<CR>', {})
 vim.api.nvim_set_keymap("n", "<leader>of", ':ObsidianFollowLink<CR>', {})
 vim.api.nvim_set_keymap("n", "<leader>on", ':ObsidianNew ', {})
@@ -8,7 +13,7 @@ vim.api.nvim_set_keymap("n", "<leader>oe", ':ObsidianYesterday<CR>', {})
 -- https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#highlight
 vim.api.nvim_set_hl(0, "@markup.strong.markdown_inline", { link = "ObsidianTodo" })
 
-require("obsidian").setup({
+obsidian.setup({
     workspaces = {
         {
             name = "notes",

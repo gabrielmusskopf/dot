@@ -14,5 +14,12 @@
     cm = commit -m
     ca = commit --amend --no-edit
     cam = commit --amend
+    pf = push --force-with-lease
 [core]
 	editor = nvim
+[branch]
+	sort = -committerdate
+[column]
+	ui = auto
+[maintenance]
+	repo = /home/gabrielmusskopf/dev/work/hypera/hypera-ph-catalog-service

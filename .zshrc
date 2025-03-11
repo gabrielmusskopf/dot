@@ -40,9 +40,9 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 source ~/.local/bin/scripts/j
 
-if [ -f ~/.asdf/asdf.sh ]; then
-    . $HOME/.asdf/asdf.sh
-fi
+# if [ -f ~/.asdf/asdf.sh ]; then
+#     . $HOME/.asdf/asdf.sh
+# fi
 
 if [[ -z $DISPLAY && $(tty) == /dev/tty2 ]]; then
   XDG_SESSION_TYPE=x11 GDK_BACKEND=x11 exec startx
@@ -70,6 +70,19 @@ else
     eval `ssh-agent | tee ~/.ssh/agent.env`
     ssh-add
 fi
+
+function gitstash() {
+    local name="$1"
+    if [ -z $name ]; then
+        echo "Should provide a stash name or index"
+        exit 1
+    fi
+    git stash apply $(git stash list --pretty='%gd %s'| grep "$1" |head -1| awk '{print $1}')
+}
+
+function gitpush() {
+    git push -u origin $(git branch --show-current)
+}
 
 # set JAVA_HOME on every change directory
 # https://github.com/halcyon/asdf-java/issues/51#issuecomment-611049565
@@ -109,15 +122,20 @@ alias games="ls /usr/games/"
 
 # envs
 
+export ASDF_DATA_DIR=$HOME/.asdf
 export NOTES=$HOME/notes/
 export NOTES_INBOX=$HOME/notes/00-inbox/
 export NOTES_PATH=$HOME/notes/01-Main\ Notes
-#export PATH=$HOME/jdtls/bin:$PATH
-#export PATH=$PATH:$HOME/.asdf/installs/golang/1.20.3/packages/bin
 export PATH=$HOME/.local/bin:$PATH
+#export PATH=$HOME/jdtls/bin:$PATH
 export PATH=$HOME/.local/bin/scripts:$PATH
 export PATH=$HOME/.cargo/bin:$PATH
-export JAVA_HOME=$(asdf where java)
+export PATH=$ASDF_DATA_DIR/shims:$PATH
+# export NODEJS_VERSION=$(asdf current --no-header nodejs | awk '{print $2}')
+# export PATH=$ASDF_DATA_DIR/installs/nodejs/$NODEJS_VERSION/bin:$PATH
+# export JAVA_HOME=$(asdf where java)
 export BG_COLOR="#181818"
+
+# TODO: export somente se existir asdf
 
 eval "$(zoxide init zsh)"

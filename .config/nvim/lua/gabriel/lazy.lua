@@ -33,8 +33,11 @@ require('lazy').setup({
     { 'norcalli/nvim-colorizer.lua' },
     {
         "nvim-telescope/telescope-file-browser.nvim",
-        dependencies =
-        { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+        dependencies = {
+            "nvim-telescope/telescope.nvim",
+            "nvim-lua/plenary.nvim",
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" }
+        }
     },
     { 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons', opt = true } },
     { "okuuva/auto-save.nvim" },
@@ -42,8 +45,14 @@ require('lazy').setup({
     { "preservim/vim-pencil" },
     { "tpope/vim-fugitive" },
     { "lewis6991/gitsigns.nvim" },
-    { 'echasnovski/mini.surround', version = '*' },
-    { "epwalsh/obsidian.nvim",     version = "*",                                               lazy = true, ft = "markdown" },
+    { "tpope/vim-surround" },
+    {
+        "epwalsh/obsidian.nvim",
+        version = "*",
+        lazy = true,
+        ft = "markdown",
+        cond = vim.fn.getcwd() == vim.fn.expand("~/notes"),
+    },
     {
         "iamcco/markdown-preview.nvim",
         cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
@@ -56,17 +65,37 @@ require('lazy').setup({
         tag = '0.1.6',
         dependencies = { 'nvim-lua/plenary.nvim' },
     },
+    {
+        'stevearc/oil.nvim',
+        opts = {},
+        -- Optional dependencies
+        -- dependencies = { { "echasnovski/mini.icons", opts = {} } },
+        dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+        lazy = false,
+    },
+    {
+        'MeanderingProgrammer/render-markdown.nvim',
+        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
+        -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
+        ft = { "markdown", "md" },
+        opts = {},
+    },
 
     -- LSP
-    { 'mfussenegger/nvim-jdtls' },
-    { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+    { 'mfussenegger/nvim-jdtls',                  ft = 'java' },
     { 'williamboman/mason.nvim' },
     { 'williamboman/mason-lspconfig.nvim' },
-    { 'VonHeikemen/lsp-zero.nvim',             branch = 'v3.x' },
+    { 'WhoIsSethDaniel/mason-tool-installer.nvim' },
+    { 'VonHeikemen/lsp-zero.nvim',                branch = 'v3.x' },
     { 'neovim/nvim-lspconfig' },
+    { 'hrsh7th/cmp-nvim-lsp-signature-help' },
     { 'hrsh7th/cmp-nvim-lsp' },
     { 'hrsh7th/nvim-cmp' },
     { 'hrsh7th/cmp-path' },
+    { 'saadparwaiz1/cmp_luasnip' },
     { "rafamadriz/friendly-snippets" },
-    { 'L3MON4D3/LuaSnip',                      dependencies = { 'rafamadriz/friendly-snippets' } },
+    { 'L3MON4D3/LuaSnip',                         dependencies = { 'rafamadriz/friendly-snippets' } },
 })
