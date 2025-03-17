@@ -3,15 +3,8 @@ local telescope = require('telescope')
 
 vim.keymap.set('n', '<leader>pk', builtin.keymaps)
 vim.keymap.set('n', '<leader>pb', builtin.buffers)
-vim.keymap.set('n', '<leader>pf', function()
-    builtin.find_files({ hidden = true, follow = true })
-end)
-vim.keymap.set('n', '<leader>ps', function()
-    builtin.live_grep({
-        cwd = vim.g.first_path,
-        additional_args = { "--hidden", "--glob=!.git/" },
-    })
-end)
+vim.keymap.set('n', '<leader>pf', builtin.find_files)
+vim.keymap.set('n', '<leader>ps', builtin.live_grep)
 
 local status, utils = pcall(require, "gabriel.utils")
 if status then
@@ -19,19 +12,16 @@ if status then
 end
 
 telescope.setup {
-    -- https://github.com/nvim-telescope/telescope.nvim/issues/848#issuecomment-1584291014
-    defaults = vim.tbl_extend(
-        "force",
-        require('telescope.themes').get_ivy({}),
-        {
-            -- custom configs
-        }),
+    defaults = require('telescope.themes').get_ivy(),
     extensions = {
         fzf = {}
     },
     pickers = {
         find_files = {
-            find_command = { "rg", "--files", "--sortr=modified" }
+            find_command = { "rg", "--files", "--hidden", "--sortr=modified" }
+        },
+        live_grep = {
+            additional_args = { "--hidden", "--glob=!.git/", "--sortr=modified" }
         }
     }
 }

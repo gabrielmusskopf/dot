@@ -8,6 +8,7 @@ require('render-markdown').setup({
         enabled = true,
         left_pad = 0,
         right_pad = 1,
+        icons = { '•', '◦', '◦', '◦' },
     },
     heading = {
         sign = false,
@@ -31,11 +32,12 @@ require('render-markdown').setup({
         },
     },
     code = {
-        width = 'block',
-        min_width = 45,
+        -- width = 'block',
+        -- min_width = 100,
         left_pad = 2,
         right_pad = 2,
         language_pad = 2,
+        highlight = 'MsgSeparator',
     },
     latex = {
         enabled = true,

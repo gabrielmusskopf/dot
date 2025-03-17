@@ -44,9 +44,9 @@ source ~/.local/bin/scripts/j
 #     . $HOME/.asdf/asdf.sh
 # fi
 
-if [[ -z $DISPLAY && $(tty) == /dev/tty2 ]]; then
-  XDG_SESSION_TYPE=x11 GDK_BACKEND=x11 exec startx
-fi
+# if [[ -z $DISPLAY && $(tty) == /dev/tty2 ]]; then
+#   XDG_SESSION_TYPE=x11 GDK_BACKEND=x11 exec startx
+# fi
 
 if [ -d ~/.kube ]; then
   for file in $(find ~/.kube -type f -name "*.yaml" -o -name "*.yml"); do
@@ -82,6 +82,21 @@ function gitstash() {
 
 function gitpush() {
     git push -u origin $(git branch --show-current)
+}
+
+function jsondiff() {
+    local fileA="$1"
+    local fileB="$2"
+
+    if [[ -z $fileA || -z $fileB ]]; then
+        echo "ERROR: Should provide a two json files: jsondiff A.json B.json <diff args>"
+        exit 1
+    fi
+
+    shift 2
+    local args=("$@")
+
+    diff "${args[@]}" <(jq --sort-keys . $fileA ) <(jq --sort-keys . $fileB )
 }
 
 # set JAVA_HOME on every change directory

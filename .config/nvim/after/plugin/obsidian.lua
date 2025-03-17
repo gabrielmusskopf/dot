@@ -13,11 +13,93 @@ vim.api.nvim_set_keymap("n", "<leader>oe", ':ObsidianYesterday<CR>', {})
 -- https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#highlight
 vim.api.nvim_set_hl(0, "@markup.strong.markdown_inline", { link = "ObsidianTodo" })
 
+local notesPath = "~/notes"
+local imageFolder = "Files"
+
+local function save_clipboard_image()
+    local filename = "Pasted image " .. os.date("%Y%m%d%H%M%S") .. ".png"
+    local encoded_filename = filename:gsub(" ", "%%20")
+    local escaped_filename = filename:gsub(" ", "\\ ")
+
+    local full_path = notesPath .. "/" .. imageFolder .. "/" .. escaped_filename
+    local exit_code = os.execute("xclip -selection clipboard -t image/png -o > " .. full_path .. " 2>&1")
+
+    if exit_code == 0 then
+        print("Imagem salva em: " .. full_path)
+        local markdown_reference = "![" .. filename .. "](../Files/" .. encoded_filename .. ")"
+        vim.api.nvim_put({ markdown_reference }, "c", true, true)
+
+        return markdown_reference
+    else
+        print("Erro ao salvar a imagem. O conteúdo copiado é uma imagem?")
+        return nil
+    end
+end
+
+local function generate_pdf(path, destination)
+end
+
+local function export_file_pdf(file_path, destination)
+    local escaped_path = file_path:gsub(" ", "\\ ")
+    local escaped_destination = destination:gsub(" ", "\\ ")
+
+    local exit_code = os.execute("pandoc " .. escaped_path .. " -o " .. destination ..
+        " --pdf-engine=xelatex  -V geometry:a4paper -V geometry:margin=1in --resource-path=" ..
+        imageFolder)
+
+    if exit_code == 0 then
+        os.execute("xdg-open " .. escaped_destination)
+    else
+        print("Erro ao gerar o PDF em " .. escaped_destination)
+    end
+end
+
+local function export_to_pdf()
+    local file_path = vim.api.nvim_buf_get_name(0)
+    if file_path == "" then
+        print("Erro: Nenhum arquivo aberto.")
+        return
+    end
+
+    local destination = vim.fn.input("Destino do PDF: ", file_path:gsub("%.%w+$", ".pdf"), "file")
+    vim.cmd("echo ''") -- Não sobreescrever lualine
+
+    if destination == "" then
+        -- TODO: Retornar quando for o mesmo arquivo
+        return
+    end
+
+    local dir = destination:match("(.*/)") or "./"
+    local check_dir = os.execute("test -d " .. dir)
+    if check_dir ~= 0 then
+        print("Erro: O diretório de destino não existe.")
+        return
+    end
+
+    print("Gerando PDF...")
+    return export_file_pdf(file_path, destination)
+end
+
+local function view_as_pdf()
+    local file_path = vim.api.nvim_buf_get_name(0)
+    if file_path == "" then
+        print("Erro: Nenhum arquivo aberto.")
+        return
+    end
+
+    local destination = "/tmp/nvim_viewer.pdf"
+    return export_file_pdf(file_path, destination)
+end
+
+vim.keymap.set('n', '<leader>op', save_clipboard_image)
+vim.keymap.set('n', '<leader>oe', export_to_pdf)
+vim.keymap.set('n', '<leader>ov', view_as_pdf)
+
 obsidian.setup({
     workspaces = {
         {
             name = "notes",
-            path = "~/notes",
+            path = notesPath,
         },
     },
     notes_subdir = "01-Main Notes",
@@ -29,7 +111,7 @@ obsidian.setup({
     },
     disable_frontmatter = true, -- metadata
     attachments = {
-        img_folder = "Files"
+        img_folder = imageFolder
     },
     daily_notes = {
         folder = "Daily",
