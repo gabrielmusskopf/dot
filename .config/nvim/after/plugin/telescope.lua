@@ -18,7 +18,7 @@ telescope.setup {
     },
     pickers = {
         find_files = {
-            find_command = { "rg", "--files", "--hidden", "--sortr=modified" }
+            find_command = { "rg", "--files", "--hidden", "--glob=!.git/", "--sortr=modified" }
         },
         live_grep = {
             additional_args = { "--hidden", "--glob=!.git/", "--sortr=modified" }

@@ -6,11 +6,10 @@ else
     arquivo="$NOTES_PATH/daily.md"
 fi
 
-data=$(date +"%d de %B de %Y")
+data=$(date +"%A, %d de %B de %Y" | sed -E 's/^(.)/\U\1/')
 hora=$(date +"%H:%M")
 
-template="
-# $data
+template="# $data
 
 
 

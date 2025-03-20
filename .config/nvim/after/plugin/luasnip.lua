@@ -13,6 +13,10 @@ ls.add_snippets(
         s("`", { t("`"), i(1), t("`") }),
         s("'", { t("'"), i(1), t("'") }),
         s('"', { t('"'), i(1), t('"') }),
+
+        s("datef", f(function()
+            return vim.fn.system("date '+%A, %d de %B de %Y' | sed -E 's/^(.)/\\U\\1/'"):gsub("\n", "")
+        end))
     })
 
 ls.add_snippets(
@@ -50,8 +54,8 @@ ls.add_snippets(
         s("larrow", { t("‹──") }),
         s("uarrow", { t({ "∧", "│" }) }),
         s("darrow", { t({ "│", "∨" }) }),
-        s("dlarrow", { t({ " │", "‹─╯" }) }),
+        s("dlarrow", { t({ "  │", "‹─╯" }) }),
         s("drarrow", { t({ "│ ", "╰─›" }) }),
-        s("ularrow", { t({ "‹─╮", " │" }) }),
+        s("ularrow", { t({ "‹─╮", "  │" }) }),
         s("urarrow", { t({ "╭─›", "│ " }) }),
     })
