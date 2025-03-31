@@ -21,6 +21,7 @@ ls.add_snippets(
 
 ls.add_snippets(
     "markdown", {
+        s({ trig = "bb", desc = "Make text bold" }, { t('**'), i(1), t('**') }),
         s({ trig = "cb|codeblock", desc = "Insert markdown codeblock" }, {
             t("```"),
             i(1),

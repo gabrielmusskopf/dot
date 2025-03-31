@@ -24,71 +24,80 @@ local function save_clipboard_image()
     local full_path = notesPath .. "/" .. imageFolder .. "/" .. escaped_filename
     local exit_code = os.execute("xclip -selection clipboard -t image/png -o > " .. full_path .. " 2>&1")
 
-    if exit_code == 0 then
-        print("Imagem salva em: " .. full_path)
-        local markdown_reference = "![" .. filename .. "](../Files/" .. encoded_filename .. ")"
-        vim.api.nvim_put({ markdown_reference }, "c", true, true)
-
-        return markdown_reference
-    else
-        print("Erro ao salvar a imagem. O conteúdo copiado é uma imagem?")
+    if exit_code ~= 0 then
+        vim.notify("Erro ao salvar a imagem. O conteúdo copiado é uma imagem?")
         return nil
     end
+    vim.notify("Imagem salva em: " .. full_path)
+    local markdown_reference = "![" .. filename .. "](../" .. imageFolder .. "/" .. encoded_filename .. ")"
+    vim.api.nvim_put({ markdown_reference }, "c", true, true)
 end
 
-local function generate_pdf(path, destination)
-end
-
-local function export_file_pdf(file_path, destination)
-    local escaped_path = file_path:gsub(" ", "\\ ")
-    local escaped_destination = destination:gsub(" ", "\\ ")
-
-    local exit_code = os.execute("pandoc " .. escaped_path .. " -o " .. destination ..
-        " --pdf-engine=xelatex  -V geometry:a4paper -V geometry:margin=1in --resource-path=" ..
-        imageFolder)
-
-    if exit_code == 0 then
-        os.execute("xdg-open " .. escaped_destination)
-    else
-        print("Erro ao gerar o PDF em " .. escaped_destination)
+local function add_pandoc_unicode_math(tbl)
+    -- https://github.com/marhop/pandoc-unicode-math
+    local bin = 'pandoc-unicode-math'
+    if vim.fn.executable(bin) == 1 then
+        table.insert(tbl, '--filter')
+        table.insert(tbl, bin)
     end
+end
+
+local function export_and_open_pdf(file_path, destination)
+    local convert_command = {
+        'pandoc', file_path,
+        '-o', destination,
+        '--pdf-engine', 'xelatex',
+        '-V', 'geometry:a4paper',
+        '-V', 'geometry:margin=1in',
+        '-V', 'mathspec',
+        '--resource-path', imageFolder,
+    }
+    add_pandoc_unicode_math(convert_command)
+
+    local on_exit = function(response)
+        vim.schedule(function()
+            -- schedule para poder notificar
+            if response.code ~= 0 then
+                vim.notify(response.stderr, vim.log.levels.ERROR)
+                return
+            end
+            if response.stderr then
+                vim.notify(response.stderr, vim.log.levels.WARN)
+            end
+            vim.system({ "xdg-open", destination })
+        end)
+    end
+
+    vim.system(convert_command, on_exit)
 end
 
 local function export_to_pdf()
-    local file_path = vim.api.nvim_buf_get_name(0)
-    if file_path == "" then
-        print("Erro: Nenhum arquivo aberto.")
-        return
-    end
+    local file_path = vim.fn.expand('%:p')
+    local destination = vim.fn.input("Destino do PDF: ", file_path, "file")
+    vim.cmd("echo ''")
 
-    local destination = vim.fn.input("Destino do PDF: ", file_path:gsub("%.%w+$", ".pdf"), "file")
-    vim.cmd("echo ''") -- Não sobreescrever lualine
-
-    if destination == "" then
-        -- TODO: Retornar quando for o mesmo arquivo
+    if destination == "" or destination == file_path then
         return
     end
 
     local dir = destination:match("(.*/)") or "./"
-    local check_dir = os.execute("test -d " .. dir)
-    if check_dir ~= 0 then
-        print("Erro: O diretório de destino não existe.")
+    if vim.fn.isdirectory(dir) == 0 then
+        vim.notify('Destino não existe', vim.log.levels.ERROR)
         return
     end
 
-    print("Gerando PDF...")
-    return export_file_pdf(file_path, destination)
+    vim.notify('Gerando PDF...')
+    export_and_open_pdf(file_path, destination)
+    vim.notify('PDF gerado, abrindo visualização')
 end
 
 local function view_as_pdf()
-    local file_path = vim.api.nvim_buf_get_name(0)
-    if file_path == "" then
-        print("Erro: Nenhum arquivo aberto.")
-        return
-    end
-
+    vim.notify('Iniciando visualização em PDF...')
+    local file_path = vim.fn.expand('%:p')
     local destination = "/tmp/nvim_viewer.pdf"
-    return export_file_pdf(file_path, destination)
+
+    export_and_open_pdf(file_path, destination)
+    vim.notify('Abrindo visualização')
 end
 
 vim.keymap.set('n', '<leader>op', save_clipboard_image)

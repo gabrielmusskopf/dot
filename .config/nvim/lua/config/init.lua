@@ -1,0 +1,5 @@
+require("config.remap")
+require("config.lazy")
+require("config.set")
+local utils = require("config.utils")
+utils.colorize()

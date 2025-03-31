@@ -40,10 +40,22 @@ require('render-markdown').setup({
         highlight = 'MsgSeparator',
     },
     latex = {
-        enabled = true,
-        -- converter = 'latex2text',
-        -- highlight = 'RenderMarkdownMath',
-        -- top_pad = 0,
-        -- bottom_pad = 0,
+        enabled = false,
+    },
+    checkbox = {
+        unchecked = {
+            icon = '󰄱 ',
+            highlight = 'RenderMarkdownUnchecked',
+            scope_highlight = nil,
+        },
+        checked = {
+            icon = '󰱒 ',
+            highlight = 'RenderMarkdownChecked',
+            scope_highlight = '@markup.strikethrough'
+        },
+        custom = {
+            todo = { raw = '[-]', rendered = '󰥔 ', highlight = 'RenderMarkdownTodo' },
+            important = { raw = '[~]', rendered = '󰓎 ', highlight = 'DiagnosticWarn' },
+        },
     },
 })

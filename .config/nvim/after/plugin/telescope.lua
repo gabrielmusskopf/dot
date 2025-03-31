@@ -6,7 +6,7 @@ vim.keymap.set('n', '<leader>pb', builtin.buffers)
 vim.keymap.set('n', '<leader>pf', builtin.find_files)
 vim.keymap.set('n', '<leader>ps', builtin.live_grep)
 
-local status, utils = pcall(require, "gabriel.utils")
+local status, utils = pcall(require, "config.utils")
 if status then
     utils.set_hl("TelescopeBorder", { bg = "none" })
 end

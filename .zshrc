@@ -99,6 +99,23 @@ function jsondiff() {
     diff "${args[@]}" <(jq --sort-keys . $fileA ) <(jq --sort-keys . $fileB )
 }
 
+function run_cpp() {
+    if [[ -z "$1" ]]; then
+        echo "Uso: run_cpp <arquivo.cpp>"
+        return 1
+    fi
+
+    if [[ "$1" != *.cpp ]]; then
+        echo "Erro: O arquivo deve ter extensão .cpp"
+        return 1
+    fi
+
+    file="$1"
+    bin="${file%.cpp}"
+
+    g++ "$file" -o "$bin" && ./"$bin"
+}
+
 # set JAVA_HOME on every change directory
 # https://github.com/halcyon/asdf-java/issues/51#issuecomment-611049565
 function asdf_update_java_home {

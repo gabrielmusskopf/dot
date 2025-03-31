@@ -18,4 +18,18 @@ function M.set_hl(name, updates)
     vim.api.nvim_set_hl(0, name, settings)
 end
 
+function M.colorize(color)
+    -- color = color or "gruvbox"
+    color = color or "kanagawa"
+    vim.cmd.colorscheme(color)
+
+    vim.o.background = "dark"
+
+    M.set_hl("Normal", { bg = "none" })
+    M.set_hl("NormalFloat", { bg = "none" })
+    M.set_hl("Whitespace", { fg = "#292d2f" })
+    M.set_hl("LineNr", { bg = "none" })
+    -- M.set_hl("SignColumn", { bg = "none" })
+end
+
 return M

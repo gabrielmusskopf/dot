@@ -23,12 +23,16 @@ cmp.setup({
         ['<S-Tab>'] = cmp_action.luasnip_jump_backward(),
         ['<C-Space>'] = mapping.complete(),
         ['<C-e>'] = mapping.abort(),
-        ['<CR>'] = mapping.confirm({ select = true }),
+        ['<CR>'] = mapping.confirm({ select = false }),
+        ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-d>'] = cmp.mapping.scroll_docs(4),
     }),
     sources = config.sources({
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'path' },
+        { name = 'latex_symbols' },
+        { name = 'emoji' },
     }),
     formatting = cmp_format
 })

@@ -73,8 +73,8 @@ nnoremap gd :action GotoDeclaration<CR>
 nnoremap gD :action GotoSuperMethod<CR>
 nnoremap gt :action GotoTest<CR>
 nnoremap gu :action ShowUsages<CR>
-"nnoremap ]d :action GotoNextError<CR>
-"nnoremap [d :action GotoPreviousError<CR>
+nnoremap ]d :action GotoNextError<CR>
+nnoremap [d :action GotoPreviousError<CR>
 nnoremap <leader>bb :action ShowBookmarks<CR>
 nnoremap ]b :action GotoNextBookmark<CR>
 nnoremap [b :action GotoPreviousBookmark<CR>
