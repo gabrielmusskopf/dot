@@ -61,9 +61,14 @@ local function export_and_open_pdf(file_path, destination)
                 vim.notify(response.stderr, vim.log.levels.ERROR)
                 return
             end
-            if response.stderr then
-                vim.notify(response.stderr, vim.log.levels.WARN)
+            local output = ""
+            if response.stderr ~= nil and response.stderr ~= "" then
+                output = "WARNING: " .. response.stderr .. "\n"
             end
+            if response.stdout ~= nil and response.stdout ~= "" then
+                output = output .. "INFO: " .. response.stdout
+            end
+            vim.notify(output)
             vim.system({ "xdg-open", destination })
         end)
     end

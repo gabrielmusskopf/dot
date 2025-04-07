@@ -49,8 +49,6 @@ require('render-markdown').setup({
             scope_highlight = nil,
         },
         checked = {
-            icon = '󰱒 ',
-            highlight = 'RenderMarkdownChecked',
             scope_highlight = '@markup.strikethrough'
         },
         custom = {
