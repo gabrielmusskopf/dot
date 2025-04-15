@@ -29,7 +29,7 @@ set nu
 set visualbell
 set noerrorbells
 set timeoutlen=225
-#set relativenumber
+set relativenumber
 #set clipboard+=unnamed
 #set clipboard+=ideaputn
 
@@ -79,6 +79,8 @@ nnoremap <leader>bb :action ShowBookmarks<CR>
 nnoremap ]b :action GotoNextBookmark<CR>
 nnoremap [b :action GotoPreviousBookmark<CR>
 nnoremap <leader>b :action ToggleBookmark<CR>
+nnoremap ]h :action VcsShowNextChangeMarker<CR>
+nnoremap [h :action VcsShowPrevChangeMarker<CR>
 nnoremap <leader>ca :action Refactorings.QuickListPopupAction<CR>
 vmap <leader>ca :action Refactorings.QuickListPopupAction<CR>
 nnoremap gr :action FindUsagesInFile<CR>

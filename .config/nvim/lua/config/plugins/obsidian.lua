@@ -1,18 +1,3 @@
-local ok, obsidian = pcall(require, "obsidian")
-if not ok then
-    return
-end
-
-vim.api.nvim_set_keymap("n", "<leader>ob", ':ObsidianBacklinks<CR>', {})
-vim.api.nvim_set_keymap("n", "<leader>of", ':ObsidianFollowLink<CR>', {})
-vim.api.nvim_set_keymap("n", "<leader>on", ':ObsidianNew ', {})
-vim.api.nvim_set_keymap("n", "<leader>ot", ':ObsidianTemplate<CR>', {})
-vim.api.nvim_set_keymap("n", "<leader>oo", ':ObsidianToday<CR>', {})
-vim.api.nvim_set_keymap("n", "<leader>oe", ':ObsidianYesterday<CR>', {})
-
--- https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#highlight
-vim.api.nvim_set_hl(0, "@markup.strong.markdown_inline", { link = "ObsidianTodo" })
-
 local notesPath = "~/notes"
 local imageFolder = "Files"
 
@@ -105,51 +90,70 @@ local function view_as_pdf()
     vim.notify('Abrindo visualização')
 end
 
-vim.keymap.set('n', '<leader>op', save_clipboard_image)
-vim.keymap.set('n', '<leader>oe', export_to_pdf)
-vim.keymap.set('n', '<leader>ov', view_as_pdf)
-
-obsidian.setup({
-    workspaces = {
-        {
-            name = "notes",
-            path = notesPath,
+return {
+    {
+        "epwalsh/obsidian.nvim",
+        lazy = true,
+        ft = { "markdown", "md" },
+        cond = vim.fn.getcwd() == vim.fn.expand(notesPath),
+        init = function()
+            -- https://github.com/nvim-treesitter/nvim-treesitter?tab=readme-ov-file#highlight
+            vim.api.nvim_set_hl(0, "@markup.strong.markdown_inline", { link = "ObsidianTodo" })
+        end,
+        keys = {
+            { "<leader>ob", '<cmd>ObsidianBacklinks<CR>' },
+            { "<leader>of", '<cmd>ObsidianFollowLink<CR>' },
+            { "<leader>on", '<cmd>ObsidianNew ' },
+            { "<leader>ot", '<cmd>ObsidianTemplate<CR>' },
+            { "<leader>oo", '<cmd>ObsidianToday<CR>' },
+            { "<leader>oe", '<cmd>ObsidianYesterday<CR>' },
+            { '<leader>op', save_clipboard_image },
+            { '<leader>oe', export_to_pdf },
+            { '<leader>ov', view_as_pdf },
         },
+        opts = {
+            workspaces = {
+                {
+                    name = "notes",
+                    path = notesPath,
+                },
+            },
+            notes_subdir = "01-Main Notes",
+            new_notes_location = "notes_subdir",
+            templates = {
+                folder = "Templates",
+                date_format = "%d/%m/%Y",
+                time_format = "%hh:%mm",
+            },
+            disable_frontmatter = true, -- metadata
+            attachments = {
+                img_folder = imageFolder
+            },
+            daily_notes = {
+                folder = "Daily",
+                date_format = "%d/%m/%Y",
+                template = "daily.md"
+            },
+            ui = {
+                reference_text = { hl_group = "ObsidianRefText" },
+                highlight_text = { hl_group = "ObsidianHighlightText" },
+                tags = { hl_group = "ObsidianTag" },
+                block_ids = { hl_group = "ObsidianBlockID" },
+                hl_groups = {
+                    -- The options are passed directly to `vim.api.nvim_set_hl()`. See `:help nvim_set_hl`.
+                    ObsidianTodo = { bold = true, fg = "#f78c6c" },
+                    ObsidianDone = { bold = true, fg = "#89ddff" },
+                    ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
+                    ObsidianTilde = { bold = true, fg = "#ff5370" },
+                    ObsidianImportant = { bold = true, fg = "#d73128" },
+                    ObsidianBullet = { bold = true, fg = "#89ddff" },
+                    ObsidianRefText = { underline = true, fg = "#c792ea" },
+                    ObsidianExtLinkIcon = { fg = "#c792ea" },
+                    ObsidianTag = { italic = true, fg = "#89ddff" },
+                    ObsidianBlockID = { italic = true, fg = "#89ddff" },
+                    ObsidianHighlightText = { bg = "#75662e" },
+                },
+            },
+        }
     },
-    notes_subdir = "01-Main Notes",
-    new_notes_location = "notes_subdir",
-    templates = {
-        folder = "Templates",
-        date_format = "%d/%m/%Y",
-        time_format = "%hh:%mm",
-    },
-    disable_frontmatter = true, -- metadata
-    attachments = {
-        img_folder = imageFolder
-    },
-    daily_notes = {
-        folder = "Daily",
-        date_format = "%d/%m/%Y",
-        template = "daily.md"
-    },
-    ui = {
-        reference_text = { hl_group = "ObsidianRefText" },
-        highlight_text = { hl_group = "ObsidianHighlightText" },
-        tags = { hl_group = "ObsidianTag" },
-        block_ids = { hl_group = "ObsidianBlockID" },
-        hl_groups = {
-            -- The options are passed directly to `vim.api.nvim_set_hl()`. See `:help nvim_set_hl`.
-            ObsidianTodo = { bold = true, fg = "#f78c6c" },
-            ObsidianDone = { bold = true, fg = "#89ddff" },
-            ObsidianRightArrow = { bold = true, fg = "#f78c6c" },
-            ObsidianTilde = { bold = true, fg = "#ff5370" },
-            ObsidianImportant = { bold = true, fg = "#d73128" },
-            ObsidianBullet = { bold = true, fg = "#89ddff" },
-            ObsidianRefText = { underline = true, fg = "#c792ea" },
-            ObsidianExtLinkIcon = { fg = "#c792ea" },
-            ObsidianTag = { italic = true, fg = "#89ddff" },
-            ObsidianBlockID = { italic = true, fg = "#89ddff" },
-            ObsidianHighlightText = { bg = "#75662e" },
-        },
-    },
-})
+}

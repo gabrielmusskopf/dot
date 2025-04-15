@@ -6,7 +6,7 @@ return {
     { "EdenEast/nightfox.nvim" },
     { "catppuccin/nvim",              name = "catppuccin" },
     { "scottmckendry/cyberdream.nvim" },
-    { "navarasu/onedark.nvim" },
+    { "navarasu/onedark.nvim", },
     { "rebelot/kanagawa.nvim" },
     { "ribru17/bamboo.nvim" },
 }
