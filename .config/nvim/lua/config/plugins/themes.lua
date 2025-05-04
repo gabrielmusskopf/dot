@@ -7,6 +7,16 @@ return {
     { "catppuccin/nvim",              name = "catppuccin" },
     { "scottmckendry/cyberdream.nvim" },
     { "navarasu/onedark.nvim", },
-    { "rebelot/kanagawa.nvim" },
     { "ribru17/bamboo.nvim" },
+    {
+        "rebelot/kanagawa.nvim",
+        opts = {
+            overrides = function(colors)
+                local theme = colors.theme.syn
+                return {
+                    markdownBold = { fg = theme.constant, bold = true },
+                }
+            end,
+        }
+    },
 }

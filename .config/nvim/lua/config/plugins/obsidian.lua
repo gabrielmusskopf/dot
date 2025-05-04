@@ -1,5 +1,8 @@
 local notesPath = "~/notes"
 local imageFolder = "Files"
+local pdf_open = false
+local visualization_mode = false
+local pdf_viewer_augroup = vim.api.nvim_create_augroup("PDFViewerMode", { clear = true })
 
 local function save_clipboard_image()
     local filename = "Pasted image " .. os.date("%Y%m%d%H%M%S") .. ".png"
@@ -24,6 +27,30 @@ local function add_pandoc_unicode_math(tbl)
     if vim.fn.executable(bin) == 1 then
         table.insert(tbl, '--filter')
         table.insert(tbl, bin)
+    end
+end
+
+local function split(inputstr, sep)
+    if sep == nil then
+        sep = "%s"
+    end
+    local t = {}
+    for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+        table.insert(t, str)
+    end
+    return t
+end
+
+local function close_pdf(destination)
+    local lines = vim.fn.systemlist("ps -eo pid,args")
+
+    for _, line in ipairs(lines) do
+        local pid, cmd, args = unpack(split(line))
+        if pid and string.find(cmd, "evince") and string.find(args, destination) then
+            vim.notify('Encerrando visualização do PDF (' .. pid .. ')')
+            vim.fn.system({ "kill", pid })
+            return
+        end
     end
 end
 
@@ -55,6 +82,7 @@ local function export_and_open_pdf(file_path, destination)
             end
             vim.notify(output)
             vim.system({ "xdg-open", destination })
+            pdf_open = true
         end)
     end
 
@@ -81,13 +109,47 @@ local function export_to_pdf()
     vim.notify('PDF gerado, abrindo visualização')
 end
 
+local function realtime_pdf_viewer(file_path, destination)
+    if visualization_mode then
+        vim.notify('Visualização em tempo real do arquivo como PDF ativada')
+        vim.api.nvim_create_autocmd("BufWritePost", {
+            desc = "Executa visualização de PDF ao salvar",
+            group = pdf_viewer_augroup,
+            callback = function()
+                export_and_open_pdf(file_path, destination)
+            end,
+        })
+    else
+        vim.notify('Visualização em tempo real do arquivo como PDF desativada')
+        vim.api.nvim_clear_autocmds({ group = pdf_viewer_augroup })
+    end
+end
+
+local function toggle_realtime_pdf_viewer()
+    local file_path = vim.fn.expand('%:p')
+    local destination = "/tmp/nvim_viewer.pdf"
+
+    visualization_mode = not visualization_mode
+    realtime_pdf_viewer(file_path, destination)
+end
+
 local function view_as_pdf()
     vim.notify('Iniciando visualização em PDF...')
     local file_path = vim.fn.expand('%:p')
     local destination = "/tmp/nvim_viewer.pdf"
 
+    if pdf_open then
+        pdf_open = false
+        vim.notify('Fechando PDF...')
+        close_pdf(destination)
+        return
+    end
+
     export_and_open_pdf(file_path, destination)
     vim.notify('Abrindo visualização')
+
+    visualization_mode = true
+    realtime_pdf_viewer(file_path, destination)
 end
 
 return {
@@ -101,15 +163,16 @@ return {
             vim.api.nvim_set_hl(0, "@markup.strong.markdown_inline", { link = "ObsidianTodo" })
         end,
         keys = {
-            { "<leader>ob", '<cmd>ObsidianBacklinks<CR>' },
-            { "<leader>of", '<cmd>ObsidianFollowLink<CR>' },
-            { "<leader>on", '<cmd>ObsidianNew ' },
-            { "<leader>ot", '<cmd>ObsidianTemplate<CR>' },
-            { "<leader>oo", '<cmd>ObsidianToday<CR>' },
-            { "<leader>oe", '<cmd>ObsidianYesterday<CR>' },
-            { '<leader>op', save_clipboard_image },
-            { '<leader>oe', export_to_pdf },
-            { '<leader>ov', view_as_pdf },
+            { "<leader>ob",  '<cmd>ObsidianBacklinks<CR>' },
+            { "<leader>of",  '<cmd>ObsidianFollowLink<CR>' },
+            { "<leader>on",  '<cmd>ObsidianNew<CR>' },
+            { "<leader>ot",  '<cmd>ObsidianTemplate<CR>' },
+            { "<leader>oo",  '<cmd>ObsidianToday<CR>' },
+            { "<leader>oe",  '<cmd>ObsidianYesterday<CR>' },
+            { '<leader>op',  save_clipboard_image },
+            { '<leader>oe',  export_to_pdf },
+            { '<leader>ov',  view_as_pdf },
+            { '<leader>ovv', toggle_realtime_pdf_viewer },
         },
         opts = {
             workspaces = {

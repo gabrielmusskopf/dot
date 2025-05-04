@@ -1,7 +1,11 @@
 return {
-    { "tpope/vim-fugitive" },
+    {
+        "tpope/vim-fugitive",
+        event = "BufReadPre",
+    },
     {
         "lewis6991/gitsigns.nvim",
+        event = "BufReadPre",
         config = function()
             local gitsigns = require("gitsigns")
             vim.keymap.set("n", "<leader>hp", gitsigns.preview_hunk_inline)

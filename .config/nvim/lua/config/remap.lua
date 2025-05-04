@@ -5,6 +5,8 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex, { desc = "Open file explorer" })
 vim.keymap.set("n", "<leader>v", "<cmd>vsplit<CR><C-l><CR>", { desc = "Vertical split" })
 vim.keymap.set("n", "<C-l>", "<C-W>l", { desc = "Move to left pane" })
 vim.keymap.set("n", "<C-h>", "<C-W>h", { desc = "Move to right pane" })
+vim.keymap.set("n", "<C-k>", "<C-W>k", { desc = "Move to up pane" })
+vim.keymap.set("n", "<C-j>", "<C-W>j", { desc = "Move to down pane" })
 
 -- jump
 vim.keymap.set("n", "<C-n>", "<C-d>zz", { desc = "Jump page down" })
